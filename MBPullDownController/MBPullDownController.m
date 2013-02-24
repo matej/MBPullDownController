@@ -121,7 +121,7 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 		UIEdgeInsets scrollIndicatorInsets = scrollView.scrollIndicatorInsets;
 		scrollIndicatorInsets.top = offset;
 		scrollView.scrollIndicatorInsets = scrollIndicatorInsets;
-		[scrollView scrollRectToVisible:CGRectMake(0.f, 0.f, 1.f, 1.f) animated:NO];
+		[scrollView scrollRectToVisible:CGRectMake(0.f, 0.f, 1.f, 1.f) animated:YES];
 	};
 	BOOL showsVerticalScrollIndicator = scrollView.showsVerticalScrollIndicator;
 	if (animated) {
