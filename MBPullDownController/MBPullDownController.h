@@ -36,12 +36,16 @@
 @property (nonatomic, strong) UIViewController *backController;
 @property (nonatomic, assign) CGFloat closedTopOffset;
 @property (nonatomic, assign) CGFloat openBottomOffset;
+@property (nonatomic, assign) CGFloat openDragOffset;
+@property (nonatomic, assign) CGFloat closeDragOffset;
 @property (nonatomic, assign, readonly) BOOL open;
 @property (nonatomic, strong) UIView *backgroundView;
 
 - (id)initWithFrontController:(UIViewController *)front backController:(UIViewController *)back;
 - (void)toggleOpenAnimated:(BOOL)animated;
 - (void)setOpen:(BOOL)open animated:(BOOL)animated;
+- (void)setClosedTopOffset:(CGFloat)closedTopOffset animated:(BOOL)animated;
+- (void)setOpenBottomOffset:(CGFloat)openBottomOffset animated:(BOOL)animated;
 
 @end
 

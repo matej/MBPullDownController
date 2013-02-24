@@ -15,6 +15,15 @@
 
 static CGFloat const kDefaultClosedTopOffset = 44.f;
 static CGFloat const kDefaultOpenBottomOffset = 44.f;
+static CGFloat const kDefaultOpenDragOffset = 100.f;
+static CGFloat const kDefaultCloseDragOffset = 44.f;
+
+
+@interface MBPullDownController ()
+
+@property MBPullDownControllerTapUpRecognizer *tapUpRecognizer;
+
+@end
 
 
 @implementation MBPullDownController
@@ -32,6 +41,8 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
 		_backController = back;
 		_closedTopOffset = kDefaultClosedTopOffset;
 		_openBottomOffset = kDefaultOpenBottomOffset;
+		_openDragOffset = kDefaultOpenDragOffset;
+		_closeDragOffset = kDefaultCloseDragOffset;
 		_backgroundView = [MBPullDownControllerBackgroundView new];
 	}
 	return self;
@@ -43,7 +54,57 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
 	[self changeFrontControllerFrom:nil to:self.frontController];
 }
 
-#pragma mark - Open / Close
+- (void)dealloc {
+	[self cleanUpScrollView];
+}
+
+#pragma mark - Controllers
+
+- (void)setFrontController:(UIViewController *)frontController {
+	if (_frontController != frontController) {
+		UIViewController *oldController = _frontController;
+		_frontController = frontController;
+		[self changeFrontControllerFrom:oldController to:frontController];
+	}
+}
+
+- (void)setBackController:(UIViewController *)backController {
+	if (_backController != backController) {
+		UIViewController *oldController = _backController;
+		_backController = backController;
+		[self changeBackControllerFrom:oldController to:backController];
+	}
+}
+
+#pragma mark - Open / close offsets
+
+- (void)setClosedTopOffset:(CGFloat)closedTopOffset {
+	[self setClosedTopOffset:closedTopOffset animated:NO];
+}
+
+- (void)setClosedTopOffset:(CGFloat)closedTopOffset animated:(BOOL)animated {
+	if (_closedTopOffset != closedTopOffset) {
+		_closedTopOffset = closedTopOffset;
+		if (!self.open) {
+			[self setOpen:NO animated:animated];
+		}
+	}
+}
+
+- (void)setOpenBottomOffset:(CGFloat)openBottomOffset {
+	[self setOpenBottomOffset:openBottomOffset animated:NO];
+}
+
+- (void)setOpenBottomOffset:(CGFloat)openBottomOffset animated:(BOOL)animated {
+	if (_openBottomOffset != openBottomOffset) {
+		_openBottomOffset = openBottomOffset;
+		if (self.open) {
+			[self setOpen:YES animated:animated];
+		}
+	}
+}
+
+#pragma mark - Open / close actions
 
 - (void)toggleOpenAnimated:(BOOL)animated {
 	[self setOpen:!_open animated:animated];
@@ -53,22 +114,34 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
 	_open = open;
 	UIScrollView *scrollView = [self scrollView];
 	CGFloat offset = open ? self.view.bounds.size.height - self.openBottomOffset : self.closedTopOffset;
-	UIEdgeInsets insets = UIEdgeInsetsMake(offset, 0.f, 0.f, 0.f);
 	void (^update)(void) = ^{
-		scrollView.contentInset = insets;
-		scrollView.scrollIndicatorInsets = insets;
+		UIEdgeInsets contentInset = scrollView.contentInset;
+		contentInset.top = offset;
+		scrollView.contentInset = contentInset;
+		UIEdgeInsets scrollIndicatorInsets = scrollView.scrollIndicatorInsets;
+		scrollIndicatorInsets.top = offset;
+		scrollView.scrollIndicatorInsets = scrollIndicatorInsets;
 		[scrollView scrollRectToVisible:CGRectMake(0.f, 0.f, 1.f, 1.f) animated:NO];
 	};
+	BOOL showsVerticalScrollIndicator = scrollView.showsVerticalScrollIndicator;
 	if (animated) {
-		[UIView animateWithDuration:.3f animations:update];
+		scrollView.showsVerticalScrollIndicator = NO;
+		[UIView animateWithDuration:.3f animations:update completion:^(BOOL finished) {
+			scrollView.showsVerticalScrollIndicator = showsVerticalScrollIndicator;
+		}];
 	} else {
+		scrollView.showsVerticalScrollIndicator = NO;
 		update();
+		scrollView.showsVerticalScrollIndicator = showsVerticalScrollIndicator;
 	}
 }
 
-#pragma mark - ContainerController
+#pragma mark - Container controller
 
 - (void)changeFrontControllerFrom:(UIViewController *)current to:(UIViewController *)new {
+	if ([current isKindOfClass:[NSNull class]]) current = nil;
+	if ([new isKindOfClass:[NSNull class]]) new = nil;
+	
 	UIView *containerView = self.view;
 	UIView *currentView = current.view;
 	UIView *newView = new.view;
@@ -77,6 +150,7 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
 			 @"The front controller's view is not a UIScrollView subclass.");
 	
 	if (currentView) {
+		[self cleanUpScrollView];
 		[currentView removeFromSuperview];
 	}
 	if (newView) {
@@ -90,6 +164,9 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
 }
 
 - (void)changeBackControllerFrom:(UIViewController *)current to:(UIViewController *)new {
+	if ([current isKindOfClass:[NSNull class]]) current = nil;
+	if ([new isKindOfClass:[NSNull class]]) new = nil;
+	
 	UIView *containerView = self.view;
 	UIView *currentView = current.view;
 	UIView *newView = new.view;
@@ -119,6 +196,7 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
 	if (scrollView && backgroundView) {
 		backgroundView.frame = containerView.bounds;
 		[containerView insertSubview:backgroundView belowSubview:scrollView];
+		[self updateBackgroundViewForScrollOfset:scrollView.contentOffset];
 	}
 }
 
@@ -135,19 +213,33 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
 }
 
 - (void)prepareScrollView {
-	// TODO: cleanup on prevous scroll view
 	UIScrollView *scrollView = [self scrollView];
 	scrollView.backgroundColor = [UIColor clearColor];
-	[self swizzleHitTestForScrollView:scrollView];
+	[self swizzleHitTestForScrollView:scrollView revert:NO];
 	[self registerForScrollViewKVO:scrollView];
 	[self addGestureRecognizersToScrollView:scrollView];
 	[self initializeBackgroundView];
 }
 
-- (void)swizzleHitTestForScrollView:(UIScrollView *)scrollView {
+- (void)cleanUpScrollView {
+	UIScrollView *scrollView = [self scrollView];
+	[self swizzleHitTestForScrollView:scrollView revert:YES];
+	[self unregisterFromScrollViewKVO:scrollView];
+	[self.backgroundView removeFromSuperview];
+	[self removeGesureRecognizersFromScrollView:scrollView];
+}
+
+- (void)swizzleHitTestForScrollView:(UIScrollView *)scrollView revert:(BOOL)revert {
 	Class class = [scrollView class];
-    SEL originalSelector = @selector(hitTest:withEvent:);
-    SEL overrideSelector = @selector(MBPullDownControllerHitTest:withEvent:);
+    SEL originalSelector;
+    SEL overrideSelector;
+	if (revert) {
+		originalSelector = @selector(hitTest:withEvent:);
+		overrideSelector = @selector(MBPullDownControllerHitTest:withEvent:);
+	} else {
+		originalSelector = @selector(MBPullDownControllerHitTest:withEvent:);
+		overrideSelector = @selector(hitTest:withEvent:);
+	}
     Method originalMethod = class_getInstanceMethod(class, originalSelector);
     Method overrideMethod = class_getInstanceMethod(class, overrideSelector);
 	IMP overrideImp = method_getImplementation(overrideMethod);
@@ -161,13 +253,17 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
     }
 }
 
-- (void)checkForOpenCloseState {
+- (void)checkOpenCloseConstraints {
 	BOOL open = self.open;
 	CGPoint offset = [self scrollView].contentOffset;
-	if (!open && offset.y < -150.f) {
+	if (!open && offset.y < - self.openDragOffset - self.closedTopOffset) {
 		[self setOpen:YES animated:YES];
 	} else if (open) {
-		[self setOpen:NO animated:YES];
+		if (offset.y > self.closeDragOffset - self.view.bounds.size.height + self.openBottomOffset) {
+			[self setOpen:NO animated:YES];
+		} else {
+			[self setOpen:YES animated:YES];
+		}
 	}
 }
 
@@ -177,14 +273,15 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
 	MBPullDownControllerTapUpRecognizer *tapUp;
 	tapUp = [[MBPullDownControllerTapUpRecognizer alloc] initWithTarget:self action:@selector(tapUp:)];
 	[scrollView addGestureRecognizer:tapUp];
+	self.tapUpRecognizer = tapUp;
 }
 
-- (void)removeGesureRecognizersFromScrollView {
-	// TODO: cleanup
+- (void)removeGesureRecognizersFromScrollView:(UIScrollView *)scrollView {
+	[scrollView removeGestureRecognizer:self.tapUpRecognizer];
 }
 
 - (void)tapUp:(MBPullDownControllerTapUpRecognizer *)recognizer {
-	[self checkForOpenCloseState];
+	[self checkOpenCloseConstraints];
 }
 
 #pragma mark - KVO
@@ -198,8 +295,8 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"contentOffset"]) {
-        [self updateBackgroundViewForScrollOfset:[[change valueForKey:NSKeyValueChangeNewKey] CGPointValue]];
+	if ([keyPath isEqualToString:@"contentOffset"]) {
+		[self updateBackgroundViewForScrollOfset:[[change valueForKey:NSKeyValueChangeNewKey] CGPointValue]];
 	}
 }
 
@@ -293,7 +390,7 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
 		CALayer *layer = self.layer;
 		layer.shadowOffset = CGSizeMake(0, -5);
 		layer.shadowRadius = 5;
-		layer.shadowOpacity = 0.2;
+		layer.shadowOpacity = dropShadowVisible ? .2f : 0.f;
 		[self setNeedsLayout];
 		_dropShadowVisible = dropShadowVisible;
 	}
