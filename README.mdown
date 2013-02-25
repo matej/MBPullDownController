@@ -29,7 +29,7 @@ Source files
 
 The simplest way to add the MBPullDownController to your project is to directly add the `MBPullDownController.h` and `MBPullDownController.m` source files to your project.
 
-1. Download the [latest code version](https://github.com/matej/MBProgressHUD/archive/master.zip) or add the repository as a git submodule to your git-tracked project. 
+1. Download the [latest code version](https://github.com/matej/MBPullDownController/archive/master.zip) or add the repository as a git submodule to your git-tracked project. 
 2. Open your project in Xcode, than drag and drop `MBPullDownController.h` and `MBPullDownController.m` from the `MBPullDownController` directory onto your project (use the "Product Navigator view"). Make sure to select Copy items when asked if you extracted the code archive outside of your project. 
 3. Include MBPullDownController wherever you need it with `#import "MBPullDownController.h"`.
 
