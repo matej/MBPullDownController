@@ -3,7 +3,7 @@
 //  MBPullDownController
 //
 //  Created by Matej Bukovinski on 22. 02. 13.
-//  Copyright (c) 2013 Guerrilla Code. All rights reserved.
+//  Copyright (c) 2013 Matej Bukovinski. All rights reserved.
 //
 
 #import "MBPullDownController.h"
@@ -55,7 +55,7 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 }
 
 - (void)dealloc {
-	[self cleanUpScrollView];
+	[self cleanUpScrollView:[self scrollView]];
 }
 
 #pragma mark - Controllers
@@ -111,28 +111,32 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 }
 
 - (void)setOpen:(BOOL)open animated:(BOOL)animated {
+	[self willChangeValueForKey:@"open"];
 	_open = open;
+	[self didChangeValueForKey:@"open"];
 	UIScrollView *scrollView = [self scrollView];
 	CGFloat offset = open ? self.view.bounds.size.height - self.openBottomOffset : self.closedTopOffset;
-	void (^update)(void) = ^{
+	
+	void (^updateInserts)(void) = ^{
 		UIEdgeInsets contentInset = scrollView.contentInset;
 		contentInset.top = offset;
 		scrollView.contentInset = contentInset;
 		UIEdgeInsets scrollIndicatorInsets = scrollView.scrollIndicatorInsets;
 		scrollIndicatorInsets.top = offset;
 		scrollView.scrollIndicatorInsets = scrollIndicatorInsets;
-		[scrollView scrollRectToVisible:CGRectMake(0.f, 0.f, 1.f, 1.f) animated:YES];
 	};
-	BOOL showsVerticalScrollIndicator = scrollView.showsVerticalScrollIndicator;
-	if (animated) {
-		scrollView.showsVerticalScrollIndicator = NO;
-		[UIView animateWithDuration:.3f animations:update completion:^(BOOL finished) {
-			scrollView.showsVerticalScrollIndicator = showsVerticalScrollIndicator;
-		}];
+	
+	if (open) {
+		updateInserts();
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[scrollView setContentOffset:CGPointMake(0.f, -offset) animated:animated];
+		});
 	} else {
-		scrollView.showsVerticalScrollIndicator = NO;
-		update();
-		scrollView.showsVerticalScrollIndicator = showsVerticalScrollIndicator;
+		if (animated) {
+			[UIView animateWithDuration:.3f animations:updateInserts];
+		} else {
+			updateInserts();
+		}
 	}
 }
 
@@ -142,24 +146,23 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 	if ([current isKindOfClass:[NSNull class]]) current = nil;
 	if ([new isKindOfClass:[NSNull class]]) new = nil;
 	
-	UIView *containerView = self.view;
-	UIView *currentView = current.view;
-	UIView *newView = new.view;
+	[current removeFromParentViewController];
+	[self cleanUpScrollView:(UIScrollView *)current.view];
+	[current.view removeFromSuperview];
 	
-	NSAssert(!newView || [newView isKindOfClass:[UIScrollView class]],
-			 @"The front controller's view is not a UIScrollView subclass.");
-	
-	if (currentView) {
-		[self cleanUpScrollView];
-		[currentView removeFromSuperview];
-	}
-	if (newView) {
-		newView.frame = containerView.bounds;
-		[containerView addSubview:newView];
+	if (new) {
 		[self addChildViewController:new];
+		UIView *containerView = self.view;
+		UIView *newView = new.view;
+		NSString *message = @"The front controller's view is not a UIScrollView subclass.";
+		NSAssert(!newView || [newView isKindOfClass:[UIScrollView class]], message);
+		if (newView) {
+			newView.frame = containerView.bounds;
+			[containerView addSubview:newView];
+		}
 	}
 	
-	[self prepareScrollView];
+	[self prepareScrollView:(UIScrollView *)new.view];
 	[self setOpen:NO animated:NO];
 }
 
@@ -167,17 +170,17 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 	if ([current isKindOfClass:[NSNull class]]) current = nil;
 	if ([new isKindOfClass:[NSNull class]]) new = nil;
 	
-	UIView *containerView = self.view;
-	UIView *currentView = current.view;
-	UIView *newView = new.view;
+	[current removeFromParentViewController];
+	[current.view removeFromSuperview];
 	
-	if (currentView) {
-		[currentView removeFromSuperview];
-	}
-	if (newView) {
-		newView.frame = containerView.bounds;
-		[containerView insertSubview:newView atIndex:0];
+	if (new) {
 		[self addChildViewController:new];
+		UIView *containerView = self.view;
+		UIView *newView = new.view;
+		if (newView) {
+			newView.frame = containerView.bounds;
+			[containerView insertSubview:newView atIndex:0];
+		}
 	}
 }
 
@@ -212,21 +215,24 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 	return (UIScrollView *)self.frontController.view;
 }
 
-- (void)prepareScrollView {
-	UIScrollView *scrollView = [self scrollView];
-	scrollView.backgroundColor = [UIColor clearColor];
-	[self swizzleHitTestForScrollView:scrollView revert:NO];
-	[self registerForScrollViewKVO:scrollView];
-	[self addGestureRecognizersToScrollView:scrollView];
-	[self initializeBackgroundView];
+- (void)prepareScrollView:(UIScrollView *)scrollView {
+	if (scrollView) {
+		scrollView.backgroundColor = [UIColor clearColor];
+		scrollView.alwaysBounceVertical = YES;
+		[self swizzleHitTestForScrollView:scrollView revert:NO];
+		[self registerForScrollViewKVO:scrollView];
+		[self addGestureRecognizersToScrollView:scrollView];
+		[self initializeBackgroundView];
+	}
 }
 
-- (void)cleanUpScrollView {
-	UIScrollView *scrollView = [self scrollView];
-	[self swizzleHitTestForScrollView:scrollView revert:YES];
-	[self unregisterFromScrollViewKVO:scrollView];
-	[self.backgroundView removeFromSuperview];
-	[self removeGesureRecognizersFromScrollView:scrollView];
+- (void)cleanUpScrollView:(UIScrollView *)scrollView {
+	if (scrollView) {
+		[self swizzleHitTestForScrollView:scrollView revert:YES];
+		[self unregisterFromScrollViewKVO:scrollView];
+		[self.backgroundView removeFromSuperview];
+		[self removeGesureRecognizersFromScrollView:scrollView];
+	}
 }
 
 - (void)swizzleHitTestForScrollView:(UIScrollView *)scrollView revert:(BOOL)revert {
