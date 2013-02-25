@@ -18,11 +18,11 @@ MBPullDownController requires iOS 5 or newer and uses ARC. It depends on the fol
 * UIKit.framework
 * QuartzCore.framework
 
-You will need LLVM 3.0 or later in order to build MBProgressHUD. 
+You will need LLVM 3.0 or later in order to build MBPullDownController. 
 
-------------------------------------
-Adding MBProgressHUD to your project
-====================================
+-------------------------------------------
+Adding MBPullDownController to your project
+===========================================
 
 Source files
 ------------
