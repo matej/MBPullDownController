@@ -50,6 +50,13 @@
 @end
 
 
+@interface UIViewController (MBPullDownController)
+
+@property (nonatomic, readonly) MBPullDownController *pullDownController;
+
+@end
+
+
 @interface MBPullDownControllerBackgroundView : UIView
 
 @property (nonatomic, assign) BOOL dropShadowVisible;

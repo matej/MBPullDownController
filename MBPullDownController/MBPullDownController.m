@@ -303,6 +303,22 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 @end
 
 
+@implementation UIViewController (MBPullDownController)
+
+- (MBPullDownController *)pullDownController {
+	UIViewController *controller = self;
+	while (controller != nil) {
+		if ([controller isKindOfClass:[MBPullDownController class]]) {
+			return (MBPullDownController *)controller;
+		}
+		controller = controller.parentViewController;
+	}
+	return nil;
+}
+
+@end
+
+
 @implementation MBPullDownControllerTapUpRecognizer
 
 #pragma mark - Lifecycle
