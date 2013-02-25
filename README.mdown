@@ -1,0 +1,72 @@
+MBPullDownController
+====================
+--------------------
+
+MBPullDownController accepts two view controllers, which it presents one above the other. The front view controller is configured to accept a pull interaction which is utilizes to show or hide back view controller. 
+
+[![](https://dl.dropbox.com/u/378729/MBPullDownController/1-thumb.png)](https://dl.dropbox.com/u/378729/MBPullDownController/1.png)
+[![](https://dl.dropbox.com/u/378729/MBPullDownController/2-thumb.png)](https://dl.dropbox.com/u/378729/MBPullDownController/2.png)
+[![](https://dl.dropbox.com/u/378729/MBPullDownController/3-thumb.png)](https://dl.dropbox.com/u/378729/MBPullDownController/3.pngg)
+
+------------
+Requirements
+============
+
+MBPullDownController requires iOS 5 or newer and uses ARC. It depends on the following Apple frameworks:
+
+* Foundation.framework
+* UIKit.framework
+* QuartzCore.framework
+
+You will need LLVM 3.0 or later in order to build MBProgressHUD. 
+
+------------------------------------
+Adding MBProgressHUD to your project
+====================================
+
+Source files
+------------
+
+The simplest way to add the MBPullDownController to your project is to directly add the `MBPullDownController.h` and `MBPullDownController.m` source files to your project.
+
+1. Download the [latest code version](https://github.com/matej/MBPullDownController/downloads) or add the repository as a git submodule to your git-tracked project. 
+2. Open your project in Xcode, than drag and drop `MBPullDownController.h` and `MBPullDownController.m` from the `MBPullDownController` directory onto your project (use the "Product Navigator view"). Make sure to select Copy items when asked if you extracted the code archive outside of your project. 
+3. Include MBPullDownController wherever you need it with `#import "MBPullDownController.h"`.
+
+-----
+Usage
+=====
+
+Initialize a MBPullDownController with a front and back view controller, than add the controller to your view hierarchy.
+
+```objective-c
+
+// MBAppDelegate.h from the demo application
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	self.window.rootViewController = [self setUpViewControllerHierarchy];
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+
+- (UIViewController *)setUpViewControllerHierarchy {
+	MBImagesViewController *front = [[MBImagesViewController alloc] init];
+	MBSettingsController *back = [[MBSettingsController alloc] init];
+	MBPullDownController *pullDownController = [[MBPullDownController alloc] initWithFrontController:front backController:back];
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:pullDownController];
+	navigationController.navigationBarHidden = YES;
+	return navigationController;
+}
+
+```
+
+The front controllers view must be a UIScrollView subclass. 
+
+See the demo application for further details and check out MBPullDownController.h for API options. Additional documentation will be available soon. 
+
+-------
+License
+=======
+
+This code is distributed under the terms and conditions of the MIT license. See MBPullDownController.h for details. 

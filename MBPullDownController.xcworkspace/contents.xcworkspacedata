@@ -7,4 +7,7 @@
    <FileRef
       location = "group:MBPullDownController.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:README.mdown">
+   </FileRef>
 </Workspace>
