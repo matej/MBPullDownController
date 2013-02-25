@@ -35,7 +35,7 @@
 		D246C43D16DA7B31002D94D6 /* MBImagesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MBImagesViewController.xib; sourceTree = "<group>"; };
 		D246C44016DA7BCF002D94D6 /* MBImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBImageCell.h; sourceTree = "<group>"; };
 		D246C44116DA7BCF002D94D6 /* MBImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBImageCell.m; sourceTree = "<group>"; };
-		D2898CAB16D7686000FD4FF1 /* PullDownControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PullDownControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2898CAB16D7686000FD4FF1 /* Pull Down.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pull Down.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2898CAE16D7686000FD4FF1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D2898CB016D7686000FD4FF1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2898CB216D7686000FD4FF1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -86,7 +86,7 @@
 		D2898CAC16D7686000FD4FF1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D2898CAB16D7686000FD4FF1 /* PullDownControllerDemo.app */,
+				D2898CAB16D7686000FD4FF1 /* Pull Down.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -198,7 +198,7 @@
 			);
 			name = PullDownControllerDemo;
 			productName = PullDownControllerDemo;
-			productReference = D2898CAB16D7686000FD4FF1 /* PullDownControllerDemo.app */;
+			productReference = D2898CAB16D7686000FD4FF1 /* Pull Down.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -337,7 +337,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PullDownControllerDemo/PullDownControllerDemo-Prefix.pch";
 				INFOPLIST_FILE = "PullDownControllerDemo/PullDownControllerDemo-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Pull Down";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -348,7 +348,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PullDownControllerDemo/PullDownControllerDemo-Prefix.pch";
 				INFOPLIST_FILE = "PullDownControllerDemo/PullDownControllerDemo-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Pull Down";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
