@@ -6,7 +6,9 @@ MBPullDownController accepts two view controllers, which it presents one above t
 
 [![](https://dl.dropbox.com/u/378729/MBPullDownController/1-thumb.png)](https://dl.dropbox.com/u/378729/MBPullDownController/1.png)
 [![](https://dl.dropbox.com/u/378729/MBPullDownController/2-thumb.png)](https://dl.dropbox.com/u/378729/MBPullDownController/2.png)
-[![](https://dl.dropbox.com/u/378729/MBPullDownController/3-thumb.png)](https://dl.dropbox.com/u/378729/MBPullDownController/3.pngg)
+[![](https://dl.dropbox.com/u/378729/MBPullDownController/3-thumb.png)](https://dl.dropbox.com/u/378729/MBPullDownController/3.png)
+
+[Video](http://vimeo.com/user2382859/mbpulldowncontroller). 
 
 ------------
 Requirements
