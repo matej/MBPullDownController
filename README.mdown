@@ -2,7 +2,7 @@ MBPullDownController
 ====================
 --------------------
 
-MBPullDownController accepts two view controllers, which it presents one above the other. The front view controller is configured to accept a pull interaction which is utilizes to show or hide back view controller. 
+MBPullDownController accepts two view controllers, which it presents one above the other. The front view controller is configured to accept a pull interaction which it utilizes to show or hide back view controller. 
 
 [![](https://dl.dropbox.com/u/378729/MBPullDownController/1-thumb.png)](https://dl.dropbox.com/u/378729/MBPullDownController/1.png)
 [![](https://dl.dropbox.com/u/378729/MBPullDownController/2-thumb.png)](https://dl.dropbox.com/u/378729/MBPullDownController/2.png)
@@ -43,7 +43,7 @@ Initialize a MBPullDownController with a front and back view controller, than ad
 
 ```objective-c
 
-// MBAppDelegate.h from the demo application
+// MBAppDelegate.m from the demo application
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -63,9 +63,9 @@ Initialize a MBPullDownController with a front and back view controller, than ad
 
 ```
 
-The front controllers view must be a UIScrollView subclass. 
+The front controller's view must be a UIScrollView subclass. 
 
-See the demo application for further details and check out MBPullDownController.h for API options. Additional documentation will be available soon. 
+See the demo application for further details and check out [MBPullDownController.h](https://github.com/matej/MBPullDownController/blob/master/MBPullDownController/MBPullDownController.h) for API options. Additional documentation will be available soon. 
 
 -------
 License
