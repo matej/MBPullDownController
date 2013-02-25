@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D21E0E6D16DB96E100A06542 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = D21E0E6C16DB962000A06542 /* FontAwesome.otf */; };
+		D246C43E16DA7B31002D94D6 /* MBImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D246C43C16DA7B31002D94D6 /* MBImagesViewController.m */; };
+		D246C43F16DA7B31002D94D6 /* MBImagesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D246C43D16DA7B31002D94D6 /* MBImagesViewController.xib */; };
+		D246C44216DA7BCF002D94D6 /* MBImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D246C44116DA7BCF002D94D6 /* MBImageCell.m */; };
 		D2898CAF16D7686000FD4FF1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2898CAE16D7686000FD4FF1 /* UIKit.framework */; };
 		D2898CB116D7686000FD4FF1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2898CB016D7686000FD4FF1 /* Foundation.framework */; };
 		D2898CB316D7686000FD4FF1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2898CB216D7686000FD4FF1 /* CoreGraphics.framework */; };
@@ -17,17 +21,20 @@
 		D2898CC316D7686000FD4FF1 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2898CC216D7686000FD4FF1 /* Default@2x.png */; };
 		D2898CC516D7686000FD4FF1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2898CC416D7686000FD4FF1 /* Default-568h@2x.png */; };
 		D2898CDE16D76BEA00FD4FF1 /* MBPullDownController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2898CDD16D76BEA00FD4FF1 /* MBPullDownController.m */; };
-		D2898CE516D771E900FD4FF1 /* MBFrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2898CE316D771E900FD4FF1 /* MBFrontViewController.m */; };
-		D2898CE616D771E900FD4FF1 /* MBFrontViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2898CE416D771E900FD4FF1 /* MBFrontViewController.xib */; };
-		D2898CEA16D7720F00FD4FF1 /* MBBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2898CE816D7720F00FD4FF1 /* MBBackViewController.m */; };
-		D2898CEB16D7720F00FD4FF1 /* MBBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2898CE916D7720F00FD4FF1 /* MBBackViewController.xib */; };
-		D2898CEF16D7721B00FD4FF1 /* MBDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2898CED16D7721B00FD4FF1 /* MBDetailsViewController.m */; };
-		D2898CF016D7721B00FD4FF1 /* MBDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2898CEE16D7721B00FD4FF1 /* MBDetailsViewController.xib */; };
-		D2898CF316D779F900FD4FF1 /* MBBackViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D2898CF216D779F900FD4FF1 /* MBBackViewCell.m */; };
+		D2898CEA16D7720F00FD4FF1 /* MBSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2898CE816D7720F00FD4FF1 /* MBSettingsController.m */; };
+		D2898CEB16D7720F00FD4FF1 /* MBSettingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2898CE916D7720F00FD4FF1 /* MBSettingsController.xib */; };
+		D2898CEF16D7721B00FD4FF1 /* MBInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2898CED16D7721B00FD4FF1 /* MBInfoViewController.m */; };
+		D2898CF016D7721B00FD4FF1 /* MBInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2898CEE16D7721B00FD4FF1 /* MBInfoViewController.xib */; };
 		D2898CF716D79E3600FD4FF1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2898CF616D79E3600FD4FF1 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D21E0E6C16DB962000A06542 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.otf; path = fonts/FontAwesome.otf; sourceTree = "<group>"; };
+		D246C43B16DA7B31002D94D6 /* MBImagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBImagesViewController.h; sourceTree = "<group>"; };
+		D246C43C16DA7B31002D94D6 /* MBImagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBImagesViewController.m; sourceTree = "<group>"; };
+		D246C43D16DA7B31002D94D6 /* MBImagesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MBImagesViewController.xib; sourceTree = "<group>"; };
+		D246C44016DA7BCF002D94D6 /* MBImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBImageCell.h; sourceTree = "<group>"; };
+		D246C44116DA7BCF002D94D6 /* MBImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBImageCell.m; sourceTree = "<group>"; };
 		D2898CAB16D7686000FD4FF1 /* PullDownControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PullDownControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2898CAE16D7686000FD4FF1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D2898CB016D7686000FD4FF1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -43,17 +50,12 @@
 		D2898CC416D7686000FD4FF1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D2898CDC16D76BEA00FD4FF1 /* MBPullDownController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBPullDownController.h; sourceTree = "<group>"; };
 		D2898CDD16D76BEA00FD4FF1 /* MBPullDownController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBPullDownController.m; sourceTree = "<group>"; };
-		D2898CE216D771E900FD4FF1 /* MBFrontViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBFrontViewController.h; sourceTree = "<group>"; };
-		D2898CE316D771E900FD4FF1 /* MBFrontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFrontViewController.m; sourceTree = "<group>"; };
-		D2898CE416D771E900FD4FF1 /* MBFrontViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MBFrontViewController.xib; sourceTree = "<group>"; };
-		D2898CE716D7720F00FD4FF1 /* MBBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBBackViewController.h; sourceTree = "<group>"; };
-		D2898CE816D7720F00FD4FF1 /* MBBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBBackViewController.m; sourceTree = "<group>"; };
-		D2898CE916D7720F00FD4FF1 /* MBBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MBBackViewController.xib; sourceTree = "<group>"; };
-		D2898CEC16D7721B00FD4FF1 /* MBDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBDetailsViewController.h; sourceTree = "<group>"; };
-		D2898CED16D7721B00FD4FF1 /* MBDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDetailsViewController.m; sourceTree = "<group>"; };
-		D2898CEE16D7721B00FD4FF1 /* MBDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MBDetailsViewController.xib; sourceTree = "<group>"; };
-		D2898CF116D779F900FD4FF1 /* MBBackViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBBackViewCell.h; sourceTree = "<group>"; };
-		D2898CF216D779F900FD4FF1 /* MBBackViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBBackViewCell.m; sourceTree = "<group>"; };
+		D2898CE716D7720F00FD4FF1 /* MBSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBSettingsController.h; sourceTree = "<group>"; };
+		D2898CE816D7720F00FD4FF1 /* MBSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBSettingsController.m; sourceTree = "<group>"; };
+		D2898CE916D7720F00FD4FF1 /* MBSettingsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MBSettingsController.xib; sourceTree = "<group>"; };
+		D2898CEC16D7721B00FD4FF1 /* MBInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBInfoViewController.h; sourceTree = "<group>"; };
+		D2898CED16D7721B00FD4FF1 /* MBInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBInfoViewController.m; sourceTree = "<group>"; };
+		D2898CEE16D7721B00FD4FF1 /* MBInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MBInfoViewController.xib; sourceTree = "<group>"; };
 		D2898CF616D79E3600FD4FF1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -104,9 +106,9 @@
 			isa = PBXGroup;
 			children = (
 				D2898CD016D76B1200FD4FF1 /* App */,
-				D2898CE016D771B300FD4FF1 /* FrontController */,
-				D2898CDF16D7719600FD4FF1 /* BackController */,
-				D2898CE116D771BB00FD4FF1 /* DetaisController */,
+				D2898CE016D771B300FD4FF1 /* Images (Fron) */,
+				D2898CDF16D7719600FD4FF1 /* Settings (Back) */,
+				D2898CE116D771BB00FD4FF1 /* Info */,
 				D2898CDB16D76BEA00FD4FF1 /* MBPullDownController */,
 				D2898CB516D7686000FD4FF1 /* Supporting Files */,
 			);
@@ -146,36 +148,37 @@
 			path = ../../MBPullDownController;
 			sourceTree = "<group>";
 		};
-		D2898CDF16D7719600FD4FF1 /* BackController */ = {
+		D2898CDF16D7719600FD4FF1 /* Settings (Back) */ = {
 			isa = PBXGroup;
 			children = (
-				D2898CE716D7720F00FD4FF1 /* MBBackViewController.h */,
-				D2898CE816D7720F00FD4FF1 /* MBBackViewController.m */,
-				D2898CF116D779F900FD4FF1 /* MBBackViewCell.h */,
-				D2898CF216D779F900FD4FF1 /* MBBackViewCell.m */,
-				D2898CE916D7720F00FD4FF1 /* MBBackViewController.xib */,
+				D2898CE716D7720F00FD4FF1 /* MBSettingsController.h */,
+				D2898CE816D7720F00FD4FF1 /* MBSettingsController.m */,
+				D2898CE916D7720F00FD4FF1 /* MBSettingsController.xib */,
 			);
-			name = BackController;
+			name = "Settings (Back)";
 			sourceTree = "<group>";
 		};
-		D2898CE016D771B300FD4FF1 /* FrontController */ = {
+		D2898CE016D771B300FD4FF1 /* Images (Fron) */ = {
 			isa = PBXGroup;
 			children = (
-				D2898CE216D771E900FD4FF1 /* MBFrontViewController.h */,
-				D2898CE316D771E900FD4FF1 /* MBFrontViewController.m */,
-				D2898CE416D771E900FD4FF1 /* MBFrontViewController.xib */,
+				D246C43B16DA7B31002D94D6 /* MBImagesViewController.h */,
+				D246C43C16DA7B31002D94D6 /* MBImagesViewController.m */,
+				D246C44016DA7BCF002D94D6 /* MBImageCell.h */,
+				D246C44116DA7BCF002D94D6 /* MBImageCell.m */,
+				D246C43D16DA7B31002D94D6 /* MBImagesViewController.xib */,
 			);
-			name = FrontController;
+			name = "Images (Fron)";
 			sourceTree = "<group>";
 		};
-		D2898CE116D771BB00FD4FF1 /* DetaisController */ = {
+		D2898CE116D771BB00FD4FF1 /* Info */ = {
 			isa = PBXGroup;
 			children = (
-				D2898CEC16D7721B00FD4FF1 /* MBDetailsViewController.h */,
-				D2898CED16D7721B00FD4FF1 /* MBDetailsViewController.m */,
-				D2898CEE16D7721B00FD4FF1 /* MBDetailsViewController.xib */,
+				D2898CEC16D7721B00FD4FF1 /* MBInfoViewController.h */,
+				D2898CED16D7721B00FD4FF1 /* MBInfoViewController.m */,
+				D2898CEE16D7721B00FD4FF1 /* MBInfoViewController.xib */,
+				D21E0E6C16DB962000A06542 /* FontAwesome.otf */,
 			);
-			name = DetaisController;
+			name = Info;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,7 +209,7 @@
 			attributes = {
 				CLASSPREFIX = MB;
 				LastUpgradeCheck = 0460;
-				ORGANIZATIONNAME = "Guerrilla Code";
+				ORGANIZATIONNAME = "Matej Bukovinski";
 			};
 			buildConfigurationList = D2898CA616D7686000FD4FF1 /* Build configuration list for PBXProject "PullDownControllerDemo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -234,9 +237,10 @@
 				D2898CC116D7686000FD4FF1 /* Default.png in Resources */,
 				D2898CC316D7686000FD4FF1 /* Default@2x.png in Resources */,
 				D2898CC516D7686000FD4FF1 /* Default-568h@2x.png in Resources */,
-				D2898CE616D771E900FD4FF1 /* MBFrontViewController.xib in Resources */,
-				D2898CEB16D7720F00FD4FF1 /* MBBackViewController.xib in Resources */,
-				D2898CF016D7721B00FD4FF1 /* MBDetailsViewController.xib in Resources */,
+				D2898CEB16D7720F00FD4FF1 /* MBSettingsController.xib in Resources */,
+				D2898CF016D7721B00FD4FF1 /* MBInfoViewController.xib in Resources */,
+				D246C43F16DA7B31002D94D6 /* MBImagesViewController.xib in Resources */,
+				D21E0E6D16DB96E100A06542 /* FontAwesome.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,10 +254,10 @@
 				D2898CBB16D7686000FD4FF1 /* main.m in Sources */,
 				D2898CBF16D7686000FD4FF1 /* MBAppDelegate.m in Sources */,
 				D2898CDE16D76BEA00FD4FF1 /* MBPullDownController.m in Sources */,
-				D2898CE516D771E900FD4FF1 /* MBFrontViewController.m in Sources */,
-				D2898CEA16D7720F00FD4FF1 /* MBBackViewController.m in Sources */,
-				D2898CEF16D7721B00FD4FF1 /* MBDetailsViewController.m in Sources */,
-				D2898CF316D779F900FD4FF1 /* MBBackViewCell.m in Sources */,
+				D2898CEA16D7720F00FD4FF1 /* MBSettingsController.m in Sources */,
+				D2898CEF16D7721B00FD4FF1 /* MBInfoViewController.m in Sources */,
+				D246C43E16DA7B31002D94D6 /* MBImagesViewController.m in Sources */,
+				D246C44216DA7BCF002D94D6 /* MBImageCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

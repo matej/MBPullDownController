@@ -1,5 +1,5 @@
 //
-//  MBAppDelegate.h
+//  MBInfoViewController.h
 //  PullDownControllerDemo
 //
 //  Created by Matej Bukovinski on 22. 02. 13.
@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@interface MBInfoViewController : UIViewController
 
-@interface MBAppDelegate : UIResponder <UIApplicationDelegate>
+@property (strong, nonatomic) IBOutlet UIButton *backButton;
 
-@property (strong, nonatomic) UIWindow *window;
+- (IBAction)backPressed:(id)sender;
 
 @end

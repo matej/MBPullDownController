@@ -3,7 +3,7 @@
 //  PullDownControllerDemo
 //
 //  Created by Matej Bukovinski on 22. 02. 13.
-//  Copyright (c) 2013 Guerrilla Code. All rights reserved.
+//  Copyright (c) 2013 Matej Bukovinski. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
