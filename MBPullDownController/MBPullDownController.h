@@ -32,19 +32,90 @@
 
 @interface MBPullDownController : UIViewController
 
+/**
+ * The frontmost view controller. The controller's view needs to be a UIScrollView subclass.
+ */
 @property (nonatomic, strong) UIViewController *frontController;
+
+/**
+ * The background view controller, positioned behind the frontController.
+ */
 @property (nonatomic, strong) UIViewController *backController;
+
+/**
+ * The front controller offset from the top of the view, when in the closed state.
+ * Defaults to 44.f.
+ * @see setClosedTopOffset:animated:
+ */
 @property (nonatomic, assign) CGFloat closedTopOffset;
+
+/**
+ * The front controller offset from the bottom of the view, when in the open state.
+ * Defaults to 44.f. 
+ * @see setOpenBottomOffset:animated:
+ */
 @property (nonatomic, assign) CGFloat openBottomOffset;
+
+/**
+ * The minimum drag distance required to trigger the open action.
+ * Defaults to 100.f. 
+ */
 @property (nonatomic, assign) CGFloat openDragOffset;
+
+/**
+ * The minimum drag distance required to trigged the close action.
+ * Defaults to 44.f. 
+ */
 @property (nonatomic, assign) CGFloat closeDragOffset;
+
+/**
+ * The current state (observable).
+ * Defaults to NO. 
+ * @see setOpen:animated:
+ */
 @property (nonatomic, assign, readonly) BOOL open;
+
+/**
+ * A view that is placed immediately behind frontController.view and scrolled 
+ * in accordance with the closedTopOffset and openBottomOffset properties.
+ * Defaults to a MBPullDownControllerBackgroundView instance.
+ */
 @property (nonatomic, strong) UIView *backgroundView;
 
+/**
+ * The dedicated initializer. 
+ * @param frontController A UIViewController to be set as the frontController property. 
+ * The controller's view needs to be n UIScrollView subclass.
+ * @param frontController A UIViewController to be set as the backController property. 
+ */
 - (id)initWithFrontController:(UIViewController *)front backController:(UIViewController *)back;
+
+/**
+ * Switches from the open to the closed state or vice versa.  
+ * @param animated If set to YES, the open or close is animated, otherwise the action is instant. 
+ */
 - (void)toggleOpenAnimated:(BOOL)animated;
+
+/**
+ * Moves the front view controller to the open or closed position.
+ * @param open The desired frontController state. If the frontController is 
+ * already in the desired state, no action is performed.
+ * @param animated If set to YES, the open or close is animated, otherwise the action is instant.
+ */
 - (void)setOpen:(BOOL)open animated:(BOOL)animated;
+
+/**
+ * Sets closedTopOffset and optionally animates the change, if the front controller is in the closed state.
+ * @closedTopOffset The front controller offset from the top of the view, when in the closed state.
+ * @param animated If set to YES, the offset change is animated, otherwise the action is instant.
+ */
 - (void)setClosedTopOffset:(CGFloat)closedTopOffset animated:(BOOL)animated;
+
+/**
+ * Sets openBottomOffset and optionally animates the change, if the front controller is in the open state.
+ * @param openBottomOffset The front controller offset from the bottom of the view, when in the open state.
+ * @param animated If set to YES, offset change is animated, otherwise the action is instant.
+ */
 - (void)setOpenBottomOffset:(CGFloat)openBottomOffset animated:(BOOL)animated;
 
 @end
@@ -52,6 +123,10 @@
 
 @interface UIViewController (MBPullDownController)
 
+/**
+ * The nearest parent MBPullDownController in the view controllerer hiearrachy 
+ * or nil if no MBPullDownController is found.
+ */
 @property (nonatomic, readonly) MBPullDownController *pullDownController;
 
 @end
@@ -59,6 +134,10 @@
 
 @interface MBPullDownControllerBackgroundView : UIView
 
+/**
+ * Enables or disables the preset MBPullDownControllerBackgroundView shadow.
+ * Defaults to YES. 
+ */
 @property (nonatomic, assign) BOOL dropShadowVisible;
 
 @end
