@@ -7,23 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D223795916DCFEB600219BBA /* MBPullDownController.h in Headers */ = {isa = PBXBuildFile; fileRef = D2898CD816D76BE000FD4FF1 /* MBPullDownController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2898C9516D7680100FD4FF1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2898C9416D7680100FD4FF1 /* Foundation.framework */; };
 		D2898CCC16D7699C00FD4FF1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2898CCB16D7699C00FD4FF1 /* UIKit.framework */; };
 		D2898CDA16D76BE000FD4FF1 /* MBPullDownController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2898CD916D76BE000FD4FF1 /* MBPullDownController.m */; };
 		D2898CF516D79E2400FD4FF1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2898CF416D79E2400FD4FF1 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		D2898C8F16D7680100FD4FF1 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D2898C9116D7680100FD4FF1 /* libMBPullDownController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMBPullDownController.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +75,17 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		D223795816DCFEAF00219BBA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D223795916DCFEB600219BBA /* MBPullDownController.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		D2898C9016D7680100FD4FF1 /* MBPullDownController */ = {
 			isa = PBXNativeTarget;
@@ -93,7 +93,7 @@
 			buildPhases = (
 				D2898C8D16D7680100FD4FF1 /* Sources */,
 				D2898C8E16D7680100FD4FF1 /* Frameworks */,
-				D2898C8F16D7680100FD4FF1 /* CopyFiles */,
+				D223795816DCFEAF00219BBA /* Headers */,
 			);
 			buildRules = (
 			);
@@ -202,6 +202,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -213,6 +214,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;

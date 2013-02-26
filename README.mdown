@@ -35,6 +35,16 @@ The simplest way to add the MBPullDownController to your project is to directly 
 2. Open your project in Xcode, than drag and drop `MBPullDownController.h` and `MBPullDownController.m` from the `MBPullDownController` directory onto your project (use the "Product Navigator view"). Make sure to select Copy items when asked if you extracted the code archive outside of your project. 
 3. Include MBPullDownController wherever you need it with `#import "MBPullDownController.h"`.
 
+Static library
+--------------
+
+You can also add MBPullDownController as a static library to your project or workspace. 
+
+1. Download the [latest code version](https://github.com/matej/MBPullDownController/archive/master.zip) or add the repository as a git submodule to your git-tracked project. 
+2. Open your project in Xcode, than drag and drop `MBPullDownController.xcodeproj` onto your project or workspace (use the "Product Navigator view"). 
+3. Select your target and go to the Build phases tab. In the Link Binary With Libraries section select the add button. On the sheet find and add `libMBPullDownController.a`. You might also need to add `MBPullDownController` to the Target Dependencies list. 
+4. Include MBPullDownController wherever you need it with `#import <MBPullDownController/MBPullDownController.h>`.
+
 -----
 Usage
 =====
@@ -65,7 +75,7 @@ Initialize a MBPullDownController with a front and back view controller, than ad
 
 The front controller's view must be a UIScrollView subclass. 
 
-See the demo application for further details and check out [MBPullDownController.h](https://github.com/matej/MBPullDownController/blob/master/MBPullDownController/MBPullDownController.h) for API options. Additional documentation will be available soon. 
+See the demo application for further details and check out [MBPullDownController.h](https://github.com/matej/MBPullDownController/blob/master/MBPullDownController/MBPullDownController.h) for API options.
 
 -------
 License
