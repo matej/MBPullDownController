@@ -110,6 +110,10 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 	[self setOpen:!_open animated:animated];
 }
 
+- (void)setOpen:(BOOL)open {
+	[self setOpen:open animated:NO];
+}
+
 - (void)setOpen:(BOOL)open animated:(BOOL)animated {
 	[self willChangeValueForKey:@"open"];
 	_open = open;

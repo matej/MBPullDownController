@@ -73,7 +73,7 @@
  * Defaults to NO. 
  * @see setOpen:animated:
  */
-@property (nonatomic, assign, readonly) BOOL open;
+@property (nonatomic, assign) BOOL open;
 
 /**
  * A view that is placed immediately behind frontController.view and scrolled 
