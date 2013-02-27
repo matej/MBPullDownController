@@ -48,31 +48,18 @@ You can also add MBPullDownController as a static library to your project or wor
 Usage
 =====
 
-Initialize a MBPullDownController with a front and back view controller, than add the controller to your view hierarchy.
+Initialize a MBPullDownController with a front and back view controller, than add the controller to your controller hierarchy.
 
 ```objective-c
 
-// MBAppDelegate.m from the demo application
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	self.window.rootViewController = [self setUpViewControllerHierarchy];
-    [self.window makeKeyAndVisible];
-    return YES;
-}
-
-- (UIViewController *)setUpViewControllerHierarchy {
-	MBImagesViewController *front = [[MBImagesViewController alloc] init];
-	MBSettingsController *back = [[MBSettingsController alloc] init];
-	MBPullDownController *pullDownController = [[MBPullDownController alloc] initWithFrontController:front backController:back];
-	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:pullDownController];
-	navigationController.navigationBarHidden = YES;
-	return navigationController;
-}
+UITableViewController *front = [[UITableViewController new];
+UIViewController *back = [[UIViewController new];
+MBPullDownController *pullDownController = [[MBPullDownController alloc] initWithFrontController:front backController:back];
+[self.navigationController pushViewController:pullDownController animated:NO];
 
 ```
 
-The front controller's view must be a UIScrollView subclass. 
+Important: The front controller's view must be a UIScrollView subclass. 
 
 See the demo application for further details and check out [MBPullDownController.h](https://github.com/matej/MBPullDownController/blob/master/MBPullDownController/MBPullDownController.h) for API options.
 
