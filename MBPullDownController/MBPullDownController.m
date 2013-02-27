@@ -152,9 +152,7 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 #pragma mark - Container controller
 
 - (void)changeFrontControllerFrom:(UIViewController *)current to:(UIViewController *)new {
-	if ([current isKindOfClass:[NSNull class]]) current = nil;
-	if ([new isKindOfClass:[NSNull class]]) new = nil;
-	
+
 	[current removeFromParentViewController];
 	[self cleanUpScrollView:(UIScrollView *)current.view];
 	[current.view removeFromSuperview];
@@ -176,9 +174,7 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 }
 
 - (void)changeBackControllerFrom:(UIViewController *)current to:(UIViewController *)new {
-	if ([current isKindOfClass:[NSNull class]]) current = nil;
-	if ([new isKindOfClass:[NSNull class]]) new = nil;
-	
+
 	[current removeFromParentViewController];
 	[current.view removeFromSuperview];
 	
