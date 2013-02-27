@@ -56,7 +56,6 @@ UITableViewController *front = [[UITableViewController new];
 UIViewController *back = [[UIViewController new];
 MBPullDownController *pullDownController = [[MBPullDownController alloc] initWithFrontController:front backController:back];
 [self.navigationController pushViewController:pullDownController animated:NO];
-
 ```
 
 Important: The front controller's view must be a UIScrollView subclass. 
