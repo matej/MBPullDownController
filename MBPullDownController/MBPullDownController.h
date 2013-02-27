@@ -43,6 +43,12 @@
 @property (nonatomic, strong) UIViewController *backController;
 
 /**
+ * Enables or disables pull the pull to open or close interaction.
+ * Defaults to YES;
+ */
+@property (nonatomic, assign) BOOL pullToToggleEnabled;
+
+/**
  * The front controller offset from the top of the view, when in the closed state.
  * Defaults to 44.f.
  * @see setClosedTopOffset:animated:

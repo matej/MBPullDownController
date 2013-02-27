@@ -39,6 +39,7 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 	if (self) {
 		_frontController = front;
 		_backController = back;
+		_pullToToggleEnabled = YES;
 		_closedTopOffset = kDefaultClosedTopOffset;
 		_openBottomOffset = kDefaultOpenBottomOffset;
 		_openDragOffset = kDefaultOpenDragOffset;
@@ -265,11 +266,12 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 
 - (void)checkOpenCloseConstraints {
 	BOOL open = self.open;
+	BOOL enabled = self.pullToToggleEnabled;
 	CGPoint offset = [self scrollView].contentOffset;
-	if (!open && offset.y < - self.openDragOffset - self.closedTopOffset) {
+	if (!open && enabled && offset.y < - self.openDragOffset - self.closedTopOffset) {
 		[self setOpen:YES animated:YES];
 	} else if (open) {
-		if (offset.y > self.closeDragOffset - self.view.bounds.size.height + self.openBottomOffset) {
+		if (enabled && offset.y > self.closeDragOffset - self.view.bounds.size.height + self.openBottomOffset) {
 			[self setOpen:NO animated:YES];
 		} else {
 			[self setOpen:YES animated:YES];
