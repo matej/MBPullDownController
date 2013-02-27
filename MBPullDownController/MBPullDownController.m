@@ -65,7 +65,9 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 	if (_frontController != frontController) {
 		UIViewController *oldController = _frontController;
 		_frontController = frontController;
-		[self changeFrontControllerFrom:oldController to:frontController];
+		if (self.isViewLoaded) {
+			[self changeFrontControllerFrom:oldController to:frontController];
+		}
 	}
 }
 
@@ -73,7 +75,9 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 	if (_backController != backController) {
 		UIViewController *oldController = _backController;
 		_backController = backController;
-		[self changeBackControllerFrom:oldController to:backController];
+		if (self.isViewLoaded) {
+			[self changeBackControllerFrom:oldController to:backController];
+		}
 	}
 }
 
