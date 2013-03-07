@@ -45,6 +45,11 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 		_openDragOffset = kDefaultOpenDragOffset;
 		_closeDragOffset = kDefaultCloseDragOffset;
 		_backgroundView = [MBPullDownControllerBackgroundView new];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(closeAfterSingleTap:)
+                                                     name:@"closeAfterSingleTap"
+                                                   object:nil];
 	}
 	return self;
 }
@@ -147,6 +152,12 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 			updateInserts();
 		}
 	}
+}
+
+- (void)closeAfterSingleTap:(NSNotification*)notification {
+    if (self.open) {
+        [self toggleOpenAnimated:[[notification object] boolValue]];
+    }
 }
 
 #pragma mark - Container controller
@@ -348,7 +359,7 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 #pragma mark - Touch handling
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	
+    
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -356,8 +367,11 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	self.state = UIGestureRecognizerStateRecognized;
-	self.state = UIGestureRecognizerStateEnded;
+    if ([[touches anyObject] tapCount] == 1) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"closeAfterSingleTap" object:[NSNumber numberWithBool:YES]];
+    }
+    self.state = UIGestureRecognizerStateRecognized;
+    self.state = UIGestureRecognizerStateEnded;
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
