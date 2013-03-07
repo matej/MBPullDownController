@@ -50,12 +50,21 @@
 	[self.reloadButton setTitle:@"\uf021" forState:UIControlStateNormal];
 	self.infoButton.titleLabel.font = awesome;
 	[self.infoButton setTitle:@"\uf05a" forState:UIControlStateNormal];
+    
+    [self.toggleButton setTitle:@"\uf0aa" forState:UIControlStateNormal];
 }
 
 #pragma mark - Actions
 
 - (IBAction)togglePressed:(id)sender {
-	[self.pullDownController toggleOpenAnimated:YES];
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options:UIViewAnimationOptionLayoutSubviews
+                     animations:^{
+                         self.toggleButton.titleLabel.transform = CGAffineTransformRotate(self.toggleButton.titleLabel.transform, M_PI);
+                         [self.pullDownController toggleOpenAnimated:YES];
+                     }
+                     completion:nil];
 }
 
 - (IBAction)reloadPressed:(id)sender {
@@ -136,9 +145,9 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	if ([keyPath isEqualToString:@"open"]) {
-		[self.toggleButton setTitle:self.pullDownController.open ? @"\uf0aa" : @"\uf0ab" forState:UIControlStateNormal];
-	}
+//	if ([keyPath isEqualToString:@"open"]) {
+//        [self.toggleButton setTitle:self.pullDownController.open ? @"\uf0aa" : @"\uf0ab" forState:UIControlStateNormal];
+//	}
 }
 
 @end
