@@ -51,7 +51,7 @@
 	self.infoButton.titleLabel.font = awesome;
 	[self.infoButton setTitle:@"\uf05a" forState:UIControlStateNormal];
     
-    [self.toggleButton setTitle:@"\uf0aa" forState:UIControlStateNormal];
+    [self.toggleButton setTitle:@"\uf0ab" forState:UIControlStateNormal];
 }
 
 #pragma mark - Actions
@@ -67,10 +67,16 @@
                      completion:nil];
 }
 
-- (IBAction)reloadPressed:(id)sender {
-	MBPullDownController *pullDownController = self.pullDownController;
-	MBImagesViewController *imagesController = ((MBImagesViewController *)pullDownController.frontController);
-	[imagesController reload];
+- (IBAction)reloadPressed:(id)sender {    
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    animation.duration = .3;
+    animation.fromValue = [NSNumber numberWithFloat:0];
+    animation.toValue = [NSNumber numberWithFloat:2 * M_PI];
+    [self.reloadButton.titleLabel.layer addAnimation:animation forKey:animation.keyPath];
+    
+    MBPullDownController *pullDownController = self.pullDownController;
+    MBImagesViewController *imagesController = ((MBImagesViewController *)pullDownController.frontController);
+    [imagesController reload];
 }
 
 - (IBAction)infoPressed:(id)sender {
