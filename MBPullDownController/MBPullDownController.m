@@ -130,28 +130,23 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 	[self didChangeValueForKey:@"open"];
 	UIScrollView *scrollView = [self scrollView];
 	CGFloat offset = open ? self.view.bounds.size.height - self.openBottomOffset : self.closedTopOffset;
-	
+    
 	void (^updateInserts)(void) = ^{
-		UIEdgeInsets contentInset = scrollView.contentInset;
-		contentInset.top = offset;
-		scrollView.contentInset = contentInset;
-		UIEdgeInsets scrollIndicatorInsets = scrollView.scrollIndicatorInsets;
-		scrollIndicatorInsets.top = offset;
-		scrollView.scrollIndicatorInsets = scrollIndicatorInsets;
+        UIEdgeInsets contentInset = scrollView.contentInset;
+        contentInset.top = offset;
+        scrollView.contentInset = contentInset;
+        UIEdgeInsets scrollIndicatorInsets = scrollView.scrollIndicatorInsets;
+        scrollIndicatorInsets.top = offset;
+        scrollView.scrollIndicatorInsets = scrollIndicatorInsets;
+        
+        [scrollView setContentOffset:CGPointMake(0.f, -offset) animated:animated];
 	};
-	
-	if (open) {
-		updateInserts();
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[scrollView setContentOffset:CGPointMake(0.f, -offset) animated:animated];
-		});
-	} else {
-		if (animated) {
-			[UIView animateWithDuration:.3f animations:updateInserts];
-		} else {
-			updateInserts();
-		}
-	}
+    
+    if (animated) {
+        [UIView animateWithDuration:.3f animations:updateInserts];
+    } else {
+        updateInserts();
+    }
 }
 
 - (void)closeAfterSingleTap:(NSNotification*)notification {
