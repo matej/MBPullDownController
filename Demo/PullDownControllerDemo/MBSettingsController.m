@@ -46,6 +46,7 @@
 - (void)setUpButtons {
 	UIFont *awesome = [UIFont fontWithName:@"FontAwesome" size:24];
 	self.toggleButton.titleLabel.font = awesome;
+    [self.toggleButton setTitle:@"\uf0ab" forState:UIControlStateNormal];
 	self.reloadButton.titleLabel.font = awesome;
 	[self.reloadButton setTitle:@"\uf021" forState:UIControlStateNormal];
 	self.infoButton.titleLabel.font = awesome;
@@ -55,13 +56,25 @@
 #pragma mark - Actions
 
 - (IBAction)togglePressed:(id)sender {
-	[self.pullDownController toggleOpenAnimated:YES];
+    [self.pullDownController toggleOpenAnimated:YES];
 }
 
 - (IBAction)reloadPressed:(id)sender {
-	MBPullDownController *pullDownController = self.pullDownController;
-	MBImagesViewController *imagesController = ((MBImagesViewController *)pullDownController.frontController);
-	[imagesController reload];
+    static CABasicAnimation *animationForReloadButton;
+    
+    static dispatch_once_t task;
+    dispatch_once(&task, ^{
+        animationForReloadButton = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+        animationForReloadButton.duration = .3;
+        animationForReloadButton.fromValue = [NSNumber numberWithFloat:0];
+        animationForReloadButton.toValue = [NSNumber numberWithFloat:2 * M_PI];
+    });
+    
+    [self.reloadButton.titleLabel.layer addAnimation:animationForReloadButton forKey:animationForReloadButton.keyPath];
+    
+    MBPullDownController *pullDownController = self.pullDownController;
+    MBImagesViewController *imagesController = ((MBImagesViewController *)pullDownController.frontController);
+    [imagesController reload];
 }
 
 - (IBAction)infoPressed:(id)sender {
@@ -136,9 +149,26 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	if ([keyPath isEqualToString:@"open"]) {
-		[self.toggleButton setTitle:self.pullDownController.open ? @"\uf0aa" : @"\uf0ab" forState:UIControlStateNormal];
-	}
+    static BOOL buttonsLoaded ;
+    
+    if (buttonsLoaded) {
+        [UIView animateWithDuration:0.3f
+                              delay:0.0f
+                            options:UIViewAnimationOptionLayoutSubviews
+                         animations:^{
+                             self.toggleButton.titleLabel.transform = CGAffineTransformRotate(self.toggleButton.titleLabel.transform, M_PI);
+                         }
+                         completion:nil];
+    }
+    
+    static dispatch_once_t buttonsLoadedToYES;
+    dispatch_once(&buttonsLoadedToYES, ^{
+        buttonsLoaded = YES;
+    });
+    
+    //	if ([keyPath isEqualToString:@"open"]) {
+    //        [self.toggleButton setTitle:self.pullDownController.open ? @"\uf0aa" : @"\uf0ab" forState:UIControlStateNormal];
+    //	}
 }
 
 @end
