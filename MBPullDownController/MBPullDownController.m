@@ -137,9 +137,6 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 	
 	if (open) {
 		updateInserts();
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[scrollView setContentOffset:CGPointMake(0.f, -offset) animated:animated];
-		});
 	} else {
 		if (animated) {
 			[UIView animateWithDuration:.3f animations:updateInserts];
@@ -147,6 +144,10 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 			updateInserts();
 		}
 	}
+	
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[scrollView setContentOffset:CGPointMake(0.f, -offset) animated:animated];
+	});
 }
 
 #pragma mark - Container controller
