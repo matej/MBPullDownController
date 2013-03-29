@@ -167,6 +167,7 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 		if (newView) {
 			newView.frame = containerView.bounds;
 			[containerView addSubview:newView];
+			[new didMoveToParentViewController:self];
 		}
 	}
 	
@@ -186,6 +187,7 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 		if (newView) {
 			newView.frame = containerView.bounds;
 			[containerView insertSubview:newView atIndex:0];
+			[new didMoveToParentViewController:self];
 		}
 	}
 }
