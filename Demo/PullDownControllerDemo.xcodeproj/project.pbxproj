@@ -106,7 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				D2898CD016D76B1200FD4FF1 /* App */,
-				D2898CE016D771B300FD4FF1 /* Images (Fron) */,
+				D2898CE016D771B300FD4FF1 /* Images (Front) */,
 				D2898CDF16D7719600FD4FF1 /* Settings (Back) */,
 				D2898CE116D771BB00FD4FF1 /* Info */,
 				D2898CDB16D76BEA00FD4FF1 /* MBPullDownController */,
@@ -158,7 +158,7 @@
 			name = "Settings (Back)";
 			sourceTree = "<group>";
 		};
-		D2898CE016D771B300FD4FF1 /* Images (Fron) */ = {
+		D2898CE016D771B300FD4FF1 /* Images (Front) */ = {
 			isa = PBXGroup;
 			children = (
 				D246C43B16DA7B31002D94D6 /* MBImagesViewController.h */,
@@ -167,7 +167,7 @@
 				D246C44116DA7BCF002D94D6 /* MBImageCell.m */,
 				D246C43D16DA7B31002D94D6 /* MBImagesViewController.xib */,
 			);
-			name = "Images (Fron)";
+			name = "Images (Front)";
 			sourceTree = "<group>";
 		};
 		D2898CE116D771BB00FD4FF1 /* Info */ = {

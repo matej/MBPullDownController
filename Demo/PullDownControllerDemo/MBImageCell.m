@@ -113,7 +113,9 @@ static NSString * const kImageFadeAnimationKey = @"imageFade";
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
 	UIImage *image = [UIImage imageWithData:self.responseData];
 	[self setImage:image animated:YES];
-	[[MBImagesViewController cache] setObject:image forKey:connection.originalRequest.URL];
+	if (image) {
+		[[MBImagesViewController cache] setObject:image forKey:connection.originalRequest.URL];
+	}
 	[self.activityIndicator stopAnimating];
 	self.responseData = nil;
 }
