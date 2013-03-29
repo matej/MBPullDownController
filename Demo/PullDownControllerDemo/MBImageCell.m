@@ -61,6 +61,7 @@ static NSString * const kImageFadeAnimationKey = @"imageFade";
 	[self.imageView.layer removeAnimationForKey:kImageFadeAnimationKey];
 	self.imageView.image = nil;
 	_URL = nil;
+	[self.activityIndicator stopAnimating];
 }
 
 #pragma mark - Image
@@ -97,8 +98,15 @@ static NSString * const kImageFadeAnimationKey = @"imageFade";
 
 #pragma mark - NSURLConnectionDataDelegate
 
-- (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response {
+- (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSHTTPURLResponse *)response {
     self.responseData = [[NSMutableData alloc]init];
+	int code = [response statusCode];
+	if (code != 200) {
+		[connection cancel];
+		NSDictionary *info = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Invalid response code (%d).", code]};
+		NSError *error = [NSError errorWithDomain:@"MBImageCell" code:code userInfo:info];
+		[self connection:connection didFailWithError:error];
+	}
 }
 
 - (void)connection:(NSURLConnection*)connection didReceiveData:(NSData*)data {
