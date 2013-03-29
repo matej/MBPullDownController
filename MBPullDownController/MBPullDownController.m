@@ -39,14 +39,26 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 	if (self) {
 		_frontController = front;
 		_backController = back;
-		_pullToToggleEnabled = YES;
-		_closedTopOffset = kDefaultClosedTopOffset;
-		_openBottomOffset = kDefaultOpenBottomOffset;
-		_openDragOffset = kDefaultOpenDragOffset;
-		_closeDragOffset = kDefaultCloseDragOffset;
-		_backgroundView = [MBPullDownControllerBackgroundView new];
+		[self sharedInitialization];
 	}
 	return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	if (self) {
+		[self sharedInitialization];
+	}
+	return self;
+}
+
+- (void)sharedInitialization {
+	_pullToToggleEnabled = YES;
+	_closedTopOffset = kDefaultClosedTopOffset;
+	_openBottomOffset = kDefaultOpenBottomOffset;
+	_openDragOffset = kDefaultOpenDragOffset;
+	_closeDragOffset = kDefaultCloseDragOffset;
+	_backgroundView = [MBPullDownControllerBackgroundView new];
 }
 
 - (void)viewDidLoad {
