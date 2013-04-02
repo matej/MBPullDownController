@@ -28,6 +28,13 @@ static NSInteger const kContainerViewTag = -1000001;
 @end
 
 
+@interface UIScrollView (MBPullDownControllerHitTest)
+
++ (void)_MB_SwizzleHitTestForUIScrollView;
+
+@end
+
+
 @implementation MBPullDownController
 
 #pragma mark - Lifecycle
@@ -61,6 +68,7 @@ static NSInteger const kContainerViewTag = -1000001;
 	_openDragOffset = kDefaultOpenDragOffset;
 	_closeDragOffset = kDefaultCloseDragOffset;
 	_backgroundView = [MBPullDownControllerBackgroundView new];
+	[[self class] updateInstanceCount:1];
 }
 
 - (void)viewDidLoad {
@@ -72,6 +80,7 @@ static NSInteger const kContainerViewTag = -1000001;
 
 - (void)dealloc {
 	[self cleanUpScrollView:[self scrollView]];
+	[[self class] updateInstanceCount:-1];
 }
 
 #pragma mark - Controllers
@@ -242,7 +251,6 @@ static NSInteger const kContainerViewTag = -1000001;
 	if (scrollView) {
 		scrollView.backgroundColor = [UIColor clearColor];
 		scrollView.alwaysBounceVertical = YES;
-		[self swizzleHitTestForScrollView:scrollView revert:NO];
 		[self registerForScrollViewKVO:scrollView];
 		[self addGestureRecognizersToScrollView:scrollView];
 		[self initializeBackgroundView];
@@ -251,35 +259,10 @@ static NSInteger const kContainerViewTag = -1000001;
 
 - (void)cleanUpScrollView:(UIScrollView *)scrollView {
 	if (scrollView) {
-		[self swizzleHitTestForScrollView:scrollView revert:YES];
 		[self unregisterFromScrollViewKVO:scrollView];
 		[self.backgroundView removeFromSuperview];
 		[self removeGesureRecognizersFromScrollView:scrollView];
 	}
-}
-
-- (void)swizzleHitTestForScrollView:(UIScrollView *)scrollView revert:(BOOL)revert {
-	Class class = [scrollView class];
-    SEL originalSelector;
-    SEL overrideSelector;
-	if (revert) {
-		originalSelector = @selector(hitTest:withEvent:);
-		overrideSelector = @selector(MBPullDownControllerHitTest:withEvent:);
-	} else {
-		originalSelector = @selector(MBPullDownControllerHitTest:withEvent:);
-		overrideSelector = @selector(hitTest:withEvent:);
-	}
-    Method originalMethod = class_getInstanceMethod(class, originalSelector);
-    Method overrideMethod = class_getInstanceMethod(class, overrideSelector);
-	IMP overrideImp = method_getImplementation(overrideMethod);
-	const char *overrideType = method_getTypeEncoding(overrideMethod);
-	IMP originalImp = method_getImplementation(originalMethod);
-	const char *originalType = method_getTypeEncoding(originalMethod);
-    if (class_addMethod(class, originalSelector, overrideImp, overrideType)) {
-		class_replaceMethod(class, overrideSelector, originalImp, originalType);
-    } else {
-		method_exchangeImplementations(originalMethod, overrideMethod);
-    }
 }
 
 - (void)checkOpenCloseConstraints {
@@ -295,6 +278,14 @@ static NSInteger const kContainerViewTag = -1000001;
 			[self setOpen:YES animated:YES];
 		}
 	}
+}
+
++ (void)updateInstanceCount:(NSInteger)update {
+	static NSInteger count = 0;
+	if ((count == 0 && update == 1) || (count == 1 && update == -1)) {
+		[UIScrollView _MB_SwizzleHitTestForUIScrollView];
+	}
+	count = MAX(0, count + update);
 }
 
 #pragma mark - Gestures
@@ -396,20 +387,30 @@ static NSInteger const kContainerViewTag = -1000001;
 @end
 
 
-@interface UIScrollView (MBPullDownControllerHitTest)
-
-- (UIView *)MBPullDownControllerHitTest:(CGPoint)point withEvent:(UIEvent *)event;
-
-@end
-
-
 @implementation UIScrollView (MBPullDownControllerHitTest)
 
-- (UIView *)MBPullDownControllerHitTest:(CGPoint)point withEvent:(UIEvent *)event {
++ (void)_MB_SwizzleHitTestForUIScrollView {
+	Class class = [UIScrollView class];
+    SEL originalSelector = @selector(_MB_PullDownControllerHitTest:withEvent:);
+    SEL overrideSelector = @selector(hitTest:withEvent:);
+    Method originalMethod = class_getInstanceMethod(class, originalSelector);
+    Method overrideMethod = class_getInstanceMethod(class, overrideSelector);
+	IMP overrideImp = method_getImplementation(overrideMethod);
+	const char *overrideType = method_getTypeEncoding(overrideMethod);
+	IMP originalImp = method_getImplementation(originalMethod);
+	const char *originalType = method_getTypeEncoding(originalMethod);
+    if (class_addMethod(class, originalSelector, overrideImp, overrideType)) {
+		class_replaceMethod(class, overrideSelector, originalImp, originalType);
+    } else {
+		method_exchangeImplementations(originalMethod, overrideMethod);
+    }
+}
+
+- (UIView *)_MB_PullDownControllerHitTest:(CGPoint)point withEvent:(UIEvent *)event {
 	if (point.y <= 0.f && self.superview.tag == kContainerViewTag) {
 		return nil;
 	}
-	return [self MBPullDownControllerHitTest:point withEvent:event];
+	return [self _MB_PullDownControllerHitTest:point withEvent:event];
 }
 
 @end
