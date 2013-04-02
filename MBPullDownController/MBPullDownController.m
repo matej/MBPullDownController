@@ -18,6 +18,8 @@ static CGFloat const kDefaultOpenBottomOffset = 44.f;
 static CGFloat const kDefaultOpenDragOffset = 100.f;
 static CGFloat const kDefaultCloseDragOffset = 44.f;
 
+static NSInteger const kContainerViewTag = -1000001;
+
 
 @interface MBPullDownController ()
 
@@ -63,6 +65,7 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	self.view.tag = kContainerViewTag;
 	[self changeBackControllerFrom:nil to:self.backController];
 	[self changeFrontControllerFrom:nil to:self.frontController];
 }
@@ -403,7 +406,7 @@ static CGFloat const kDefaultCloseDragOffset = 44.f;
 @implementation UIScrollView (MBPullDownControllerHitTest)
 
 - (UIView *)MBPullDownControllerHitTest:(CGPoint)point withEvent:(UIEvent *)event {
-	if (point.y <= 0.f) {
+	if (point.y <= 0.f && self.superview.tag == kContainerViewTag) {
 		return nil;
 	}
 	return [self MBPullDownControllerHitTest:point withEvent:event];
