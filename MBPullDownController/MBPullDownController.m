@@ -23,7 +23,8 @@ static NSInteger const kContainerViewTag = -1000001;
 
 @interface MBPullDownController ()
 
-@property MBPullDownControllerTapUpRecognizer *tapUpRecognizer;
+@property (nonatomic, strong) MBPullDownControllerTapUpRecognizer *tapUpRecognizer;
+@property (nonatomic, assign) BOOL adjustedScroll;
 
 @end
 
@@ -308,7 +309,8 @@ static NSInteger const kContainerViewTag = -1000001;
 #pragma mark - KVO
 
 - (void)registerForScrollViewKVO:(UIScrollView *)scrollView {
-	[scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+	self.adjustedScroll = NO;
+	[scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
 
 - (void)unregisterFromScrollViewKVO:(UIScrollView *)scrollView {
@@ -317,7 +319,21 @@ static NSInteger const kContainerViewTag = -1000001;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	if ([keyPath isEqualToString:@"contentOffset"]) {
-		[self updateBackgroundViewForScrollOfset:[[change valueForKey:NSKeyValueChangeNewKey] CGPointValue]];
+		if (!self.adjustedScroll) {
+			CGPoint oldValue = [[change valueForKey:NSKeyValueChangeOldKey] CGPointValue];
+			CGPoint newValue = [[change valueForKey:NSKeyValueChangeNewKey] CGPointValue];
+			CGPoint adjusted = newValue;
+			// Simulate the scroll view elasticity effect while dragging in the open state 
+			if (self.open && [self scrollView].dragging) {
+				CGFloat delta = roundf((oldValue.y - newValue.y) / 3);
+				adjusted = CGPointMake(newValue.x, oldValue.y - delta);
+				self.adjustedScroll = YES; // prevent infinite recursion
+				[self scrollView].contentOffset = adjusted;
+			}
+			[self updateBackgroundViewForScrollOfset:adjusted];
+		} else {
+			self.adjustedScroll = NO;
+		}
 	}
 }
 
