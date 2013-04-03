@@ -50,6 +50,7 @@
 	[self.reloadButton setTitle:@"\uf021" forState:UIControlStateNormal];
 	self.infoButton.titleLabel.font = awesome;
 	[self.infoButton setTitle:@"\uf05a" forState:UIControlStateNormal];
+	[self.toggleButton setTitle:@"\uf0ab" forState:UIControlStateNormal];
 }
 
 #pragma mark - Actions
