@@ -190,9 +190,13 @@ static NSInteger const kContainerViewTag = -1000001;
 		}
 	}
 	
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[scrollView setContentOffset:CGPointMake(0.f, -offset) animated:animated];
-	});
+	if (animated) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[scrollView setContentOffset:CGPointMake(0.f, -offset) animated:animated];
+		});
+	} else {
+		[scrollView setContentOffset:CGPointMake(0.f, -offset)];
+	}
 }
 
 #pragma mark - Container controller
