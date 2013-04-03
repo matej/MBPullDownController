@@ -145,9 +145,12 @@ static NSInteger const kContainerViewTag = -1000001;
 }
 
 - (void)setOpen:(BOOL)open animated:(BOOL)animated {
-	[self willChangeValueForKey:@"open"];
-	_open = open;
-	[self didChangeValueForKey:@"open"];
+	if (open != _open) {
+		[self willChangeValueForKey:@"open"];
+		_open = open;
+		[self didChangeValueForKey:@"open"];
+	}
+	
 	UIScrollView *scrollView = [self scrollView];
 	CGFloat offset = open ? self.view.bounds.size.height - self.openBottomOffset : self.closedTopOffset;
 	
