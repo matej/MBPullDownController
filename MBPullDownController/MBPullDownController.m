@@ -157,42 +157,30 @@ static NSInteger const kContainerViewTag = -1000001;
 	}
 	
 	CGFloat offset = open ? self.view.bounds.size.height - self.openBottomOffset : self.closedTopOffset;
+	CGPoint sOffset = scrollView.contentOffset;
+	// Set content inset (no animation)
+	UIEdgeInsets contentInset = scrollView.contentInset;
+	contentInset.top = offset;
+	scrollView.contentInset = contentInset;
+	// Restor the previous scroll offset, sicne the contentInset change coud had changed it
+	[scrollView setContentOffset:sOffset];
 	
-	void (^updateContentInset)(void) = ^{
-		UIEdgeInsets contentInset = scrollView.contentInset;
-		contentInset.top = offset;
-		scrollView.contentInset = contentInset;
-	};
-	
+	// Update the scroll indicator insets
 	void (^updateScrollInsets)(void) = ^{
 		UIEdgeInsets scrollIndicatorInsets = scrollView.scrollIndicatorInsets;
 		scrollIndicatorInsets.top = offset;
 		scrollView.scrollIndicatorInsets = scrollIndicatorInsets;
 	};
-	
-	void (^updateBothInsets)(void) = ^{
-		updateContentInset();
-		updateScrollInsets();
-	};
-	
-	if (open) {
-		updateContentInset();
-		if (animated) {
-			[UIView animateWithDuration:.3f animations:updateScrollInsets];
-		} else {
-			updateScrollInsets();
-		}
+	if (animated) {
+		[UIView animateWithDuration:.3f animations:updateScrollInsets];
 	} else {
-		if (animated) {
-			[UIView animateWithDuration:.3f animations:updateBothInsets];
-		} else {
-			updateBothInsets();
-		}
+		updateScrollInsets();
 	}
 	
+	// Move the content
 	if (animated) {
 		dispatch_async(dispatch_get_main_queue(), ^{
-			[scrollView setContentOffset:CGPointMake(0.f, -offset) animated:animated];
+			[scrollView setContentOffset:CGPointMake(0.f, -offset) animated:YES];
 		});
 	} else {
 		[scrollView setContentOffset:CGPointMake(0.f, -offset)];
@@ -491,4 +479,3 @@ static NSInteger const kContainerViewTag = -1000001;
 }
 
 @end
-
