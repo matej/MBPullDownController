@@ -158,22 +158,35 @@ static NSInteger const kContainerViewTag = -1000001;
 	
 	CGFloat offset = open ? self.view.bounds.size.height - self.openBottomOffset : self.closedTopOffset;
 	
-	void (^updateInserts)(void) = ^{
+	void (^updateContentInset)(void) = ^{
 		UIEdgeInsets contentInset = scrollView.contentInset;
 		contentInset.top = offset;
 		scrollView.contentInset = contentInset;
+	};
+	
+	void (^updateScrollInsets)(void) = ^{
 		UIEdgeInsets scrollIndicatorInsets = scrollView.scrollIndicatorInsets;
 		scrollIndicatorInsets.top = offset;
 		scrollView.scrollIndicatorInsets = scrollIndicatorInsets;
 	};
 	
+	void (^updateBothInsets)(void) = ^{
+		updateContentInset();
+		updateScrollInsets();
+	};
+	
 	if (open) {
-		updateInserts();
+		updateContentInset();
+		if (animated) {
+			[UIView animateWithDuration:.3f animations:updateScrollInsets];
+		} else {
+			updateScrollInsets();
+		}
 	} else {
 		if (animated) {
-			[UIView animateWithDuration:.3f animations:updateInserts];
+			[UIView animateWithDuration:.3f animations:updateBothInsets];
 		} else {
-			updateInserts();
+			updateBothInsets();
 		}
 	}
 	
@@ -330,7 +343,7 @@ static NSInteger const kContainerViewTag = -1000001;
 			CGPoint oldValue = [[change valueForKey:NSKeyValueChangeOldKey] CGPointValue];
 			CGPoint newValue = [[change valueForKey:NSKeyValueChangeNewKey] CGPointValue];
 			CGPoint adjusted = newValue;
-			// Simulate the scroll view elasticity effect while dragging in the open state 
+			// Simulate the scroll view elasticity effect while dragging in the open state
 			if (self.open && [self scrollView].dragging) {
 				CGFloat delta = roundf((oldValue.y - newValue.y) / 3);
 				adjusted = CGPointMake(newValue.x, oldValue.y - delta);
