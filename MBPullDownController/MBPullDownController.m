@@ -152,6 +152,10 @@ static NSInteger const kContainerViewTag = -1000001;
 	}
 	
 	UIScrollView *scrollView = [self scrollView];
+	if (!scrollView) {
+		return;
+	}
+	
 	CGFloat offset = open ? self.view.bounds.size.height - self.openBottomOffset : self.closedTopOffset;
 	
 	void (^updateInserts)(void) = ^{
