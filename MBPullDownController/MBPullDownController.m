@@ -217,7 +217,7 @@ static NSInteger const kContainerViewTag = -1000001;
 	}
 	
 	[self prepareScrollView:(UIScrollView *)new.view];
-	[self setOpen:NO animated:NO];
+	[self setOpen:self.open animated:NO];
 }
 
 - (void)changeBackControllerFrom:(UIViewController *)current to:(UIViewController *)new {
