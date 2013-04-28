@@ -1,6 +1,4 @@
-MBPullDownController
-====================
---------------------
+# MBPullDownController
 
 MBPullDownController accepts two view controllers, which it presents one above the other. The front view controller is configured to accept a pull interaction which it utilizes to show or hide back view controller. 
 
@@ -9,9 +7,7 @@ MBPullDownController accepts two view controllers, which it presents one above t
 [![](https://dl.dropbox.com/u/378729/MBPullDownController/3-thumb.png)](https://dl.dropbox.com/u/378729/MBPullDownController/3.png)
 [![](https://dl.dropbox.com/u/378729/MBPullDownController/4-thumb.png)](http://vimeo.com/user2382859/mbpulldowncontroller) 
 
-------------
-Requirements
-============
+## Requirements
 
 MBPullDownController requires iOS 5 or newer and uses ARC. It depends on the following Apple frameworks:
 
@@ -21,21 +17,25 @@ MBPullDownController requires iOS 5 or newer and uses ARC. It depends on the fol
 
 You will need LLVM 3.0 or later in order to build MBPullDownController. 
 
--------------------------------------------
-Adding MBPullDownController to your project
-===========================================
+## Adding MBPullDownController to your project
 
-Source files
-------------
+### Cocoapods
 
-The simplest way to add the MBPullDownController to your project is to directly add the `MBPullDownController.h` and `MBPullDownController.m` source files to your project.
+[CocoaPods](http://cocoapods.org) is the recommended way to add MBPullDownController to your project.
+
+1. Add a pod entry for MBPullDownController to your Podfile `pod 'MBPullDownController', '~> 1.0'`
+2. Install the pod(s) by running `pod install`.
+3. Include MBPullDownController wherever you need it with `#import "MBPullDownController.h"`.
+
+### Source files
+
+Alternatively you can directly add the `MBPullDownController.h` and `MBPullDownController.m` source files to your project.
 
 1. Download the [latest code version](https://github.com/matej/MBPullDownController/archive/master.zip) or add the repository as a git submodule to your git-tracked project. 
 2. Open your project in Xcode, than drag and drop `MBPullDownController.h` and `MBPullDownController.m` from the `MBPullDownController` directory onto your project (use the "Product Navigator view"). Make sure to select Copy items when asked if you extracted the code archive outside of your project. 
 3. Include MBPullDownController wherever you need it with `#import "MBPullDownController.h"`.
 
-Static library
---------------
+### Static library
 
 You can also add MBPullDownController as a static library to your project or workspace. 
 
@@ -44,26 +44,19 @@ You can also add MBPullDownController as a static library to your project or wor
 3. Select your target and go to the Build phases tab. In the Link Binary With Libraries section select the add button. On the sheet find and add `libMBPullDownController.a`. You might also need to add `MBPullDownController` to the Target Dependencies list. 
 4. Include MBPullDownController wherever you need it with `#import <MBPullDownController/MBPullDownController.h>`.
 
------
-Usage
-=====
+## Usage
 
 Initialize a MBPullDownController with a front and back view controller, than add the controller to your controller hierarchy.
 
 ```objective-c
-
 UITableViewController *front = [[UITableViewController new];
 UIViewController *back = [[UIViewController new];
 MBPullDownController *pullDownController = [[MBPullDownController alloc] initWithFrontController:front backController:back];
 [self.navigationController pushViewController:pullDownController animated:NO];
 ```
 
-Important: The front controller's view must be a UIScrollView subclass. 
+The front controller's view must be a UIScrollView subclass. See the demo application for further details and check out [MBPullDownController.h](https://github.com/matej/MBPullDownController/blob/master/MBPullDownController/MBPullDownController.h) for API options.
 
-See the demo application for further details and check out [MBPullDownController.h](https://github.com/matej/MBPullDownController/blob/master/MBPullDownController/MBPullDownController.h) for API options.
+## License
 
--------
-License
-=======
-
-This code is distributed under the terms and conditions of the MIT license. See MBPullDownController.h for details. 
+This code is distributed under the terms and conditions of the [MIT license](LICENSE). 
