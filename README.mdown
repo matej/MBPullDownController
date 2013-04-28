@@ -1,4 +1,4 @@
-# MBPullDownController
+# MBPullDownController [![Build Status](https://travis-ci.org/matej/MBPullDownController.png)](https://travis-ci.org/matej/MBPullDownController)
 
 MBPullDownController accepts two view controllers, which it presents one above the other. The front view controller is configured to accept a pull interaction which it utilizes to show or hide back view controller. 
 
