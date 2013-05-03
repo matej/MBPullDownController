@@ -288,7 +288,7 @@ static NSInteger const kContainerViewTag = -1000001;
 		if (enabled && offset.y > self.closeDragOffset - self.view.bounds.size.height + self.openBottomOffset) {
 			[self setOpen:NO animated:YES];
 		} else {
-			[self setOpen:YES animated:YES];
+            [self setOpen:(abs(offset.y) == (int)[self scrollView].bounds.size.height - self.openBottomOffset) ? NO : YES animated:YES];
 		}
 	}
 }
