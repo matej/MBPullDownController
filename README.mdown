@@ -7,6 +7,12 @@ MBPullDownController accepts two view controllers, which it presents one above t
 [![](https://dl.dropbox.com/u/378729/MBPullDownController/3-thumb.png)](https://dl.dropbox.com/u/378729/MBPullDownController/3.png)
 [![](https://dl.dropbox.com/u/378729/MBPullDownController/4-thumb.png)](http://vimeo.com/user2382859/mbpulldowncontroller) 
 
+<!-- MacBuildServer Install Button -->
+<div class="macbuildserver-block">
+    <a class="macbuildserver-button" href="http://macbuildserver.com/project/github/build/?xcode_project=Demo%2FPullDownControllerDemo.xcodeproj&amp;target=PullDownControllerDemo&amp;repo_url=https%3A%2F%2Fgithub.com%2Fmatej%2FMBPullDownController&amp;build_conf=Release" target="_blank"><img src="http://com.macbuildserver.github.s3-website-us-east-1.amazonaws.com/button_up.png"/></a><br/><sup><a href="http://macbuildserver.com/github/opensource/" target="_blank">by MacBuildServer</a></sup>
+</div>
+<!-- MacBuildServer Install Button -->
+
 ## Requirements
 
 MBPullDownController requires iOS 5 or newer and uses ARC. It depends on the following Apple frameworks:
