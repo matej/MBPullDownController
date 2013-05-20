@@ -11,12 +11,15 @@
 #import <UIKit/UIGestureRecognizerSubclass.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
+#include <math.h>
 
 
 static CGFloat const kDefaultClosedTopOffset = 44.f;
 static CGFloat const kDefaultOpenBottomOffset = 44.f;
-static CGFloat const kDefaultOpenDragOffset = 100.f;
-static CGFloat const kDefaultCloseDragOffset = 44.f;
+static CGFloat const kDefaultOpenDragOffset = NAN;
+static CGFloat const kDefaultCloseDragOffset = NAN;
+static CGFloat const kDefaultOpenDragOffsetPercentage = .2;
+static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 
 static NSInteger const kContainerViewTag = -1000001;
 
@@ -68,6 +71,8 @@ static NSInteger const kContainerViewTag = -1000001;
 	_openBottomOffset = kDefaultOpenBottomOffset;
 	_openDragOffset = kDefaultOpenDragOffset;
 	_closeDragOffset = kDefaultCloseDragOffset;
+	_openDragOffsetPercentage = kDefaultOpenDragOffsetPercentage;
+	_closeDragOffsetPercentage = kDefaultCloseDragOffsetPercentage;
 	_backgroundView = [MBPullDownControllerBackgroundView new];
 	[[self class] updateInstanceCount:1];
 }
@@ -113,7 +118,7 @@ static NSInteger const kContainerViewTag = -1000001;
 	}
 }
 
-#pragma mark - Open / close offsets
+#pragma mark - Offsets
 
 - (void)setClosedTopOffset:(CGFloat)closedTopOffset {
 	[self setClosedTopOffset:closedTopOffset animated:NO];
@@ -139,6 +144,32 @@ static NSInteger const kContainerViewTag = -1000001;
 			[self setOpen:YES animated:animated];
 		}
 	}
+}
+
+- (void)setOpenDragOffsetPercentage:(CGFloat)openDragOffsetPercentage {
+	NSAssert(openDragOffsetPercentage >= 0.f && openDragOffsetPercentage <= 1.f,
+			 @"openDragOffsetPercentage out of bounds [0.f, 1.f]");
+	_openDragOffsetPercentage = openDragOffsetPercentage;
+}
+
+- (void)setCloseDragOffsetPercentage:(CGFloat)closeDragOffsetPercentage {
+	NSAssert(closeDragOffsetPercentage >= 0.f && closeDragOffsetPercentage <= 1.f,
+			 @"closeDragOffsetPercentage out of bounds [0.f, 1.f]");
+	_closeDragOffsetPercentage = closeDragOffsetPercentage;
+}
+
+- (CGFloat)computedOpenDragOffset {
+	if (!isnan(_openDragOffset)) {
+		return _openDragOffset;
+	}
+	return _openDragOffsetPercentage * self.view.bounds.size.height;
+}
+
+- (CGFloat)computedCloseDragOffset {
+	if (!isnan(_closeDragOffset)) {
+		return _closeDragOffset;
+	}
+	return _closeDragOffsetPercentage * self.view.bounds.size.height;
 }
 
 #pragma mark - Open / close actions
@@ -289,10 +320,10 @@ static NSInteger const kContainerViewTag = -1000001;
 	BOOL open = self.open;
 	BOOL enabled = self.pullToToggleEnabled;
 	CGPoint offset = [self scrollView].contentOffset;
-	if (!open && enabled && offset.y < - self.openDragOffset - self.closedTopOffset) {
+	if (!open && enabled && offset.y < - [self computedOpenDragOffset] - self.closedTopOffset) {
 		[self setOpen:YES animated:YES];
 	} else if (open) {
-		if (enabled && offset.y > self.closeDragOffset - self.view.bounds.size.height + self.openBottomOffset) {
+		if (enabled && offset.y > [self computedCloseDragOffset] - self.view.bounds.size.height + self.openBottomOffset) {
 			[self setOpen:NO animated:YES];
 		} else {
 			[self setOpen:YES animated:YES];

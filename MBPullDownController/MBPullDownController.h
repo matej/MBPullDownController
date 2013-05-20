@@ -64,15 +64,33 @@
 
 /**
  * The minimum drag distance required to trigger the open action.
- * Defaults to 100.f. 
+ * Overrides openDragOffsetPercentage when set. 
+ * Disabled when det to NAN (default).
  */
 @property (nonatomic, assign) CGFloat openDragOffset;
 
 /**
  * The minimum drag distance required to trigged the close action.
- * Defaults to 44.f. 
+ * Overrides closeDragOffsetPercentage when set. 
+ * Disabled when det to NAN (default).
  */
 @property (nonatomic, assign) CGFloat closeDragOffset;
+
+/**
+ * The minimum drag distance required to trigger the open action,
+ * expressed as a percentage of the total view height.
+ * Valid values from 0.f to 1.f, disabled otherwise. 
+ * Defaults to .2f.
+ */
+@property (nonatomic, assign) CGFloat openDragOffsetPercentage;
+
+/**
+ * The minimum drag distance required to trigged the close action,
+ * expressed as a percentage of the total view height.
+ * Valid values from 0.f to 1.f, disabled otherwise. 
+ * Defaults to .05f.
+ */
+@property (nonatomic, assign) CGFloat closeDragOffsetPercentage;
 
 /**
  * The current state (observable).
