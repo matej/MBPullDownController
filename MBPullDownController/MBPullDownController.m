@@ -84,6 +84,13 @@ static NSInteger const kContainerViewTag = -1000001;
 	[[self class] updateInstanceCount:-1];
 }
 
+#pragma mark - Layout
+
+- (void)viewDidLayoutSubviews {
+	[super viewDidLayoutSubviews];
+	[self setOpen:self.open animated:YES];
+}
+
 #pragma mark - Controllers
 
 - (void)setFrontController:(UIViewController *)frontController {
