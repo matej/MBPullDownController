@@ -456,9 +456,10 @@ static NSInteger const kContainerViewTag = -1000001;
 @implementation UIScrollView (MBPullDownControllerHitTest)
 
 + (void)_MB_SwizzleHitTestForUIScrollView {
+	// Based on http://www.mikeash.com/pyblog/friday-qa-2010-01-29-method-replacement-for-fun-and-profit.html
 	Class class = [UIScrollView class];
-    SEL originalSelector = @selector(_MB_PullDownControllerHitTest:withEvent:);
-    SEL overrideSelector = @selector(hitTest:withEvent:);
+    SEL originalSelector = @selector(hitTest:withEvent:);
+    SEL overrideSelector = @selector(_MB_PullDownControllerHitTest:withEvent:);
     Method originalMethod = class_getInstanceMethod(class, originalSelector);
     Method overrideMethod = class_getInstanceMethod(class, overrideSelector);
 	IMP overrideImp = method_getImplementation(overrideMethod);
@@ -473,6 +474,8 @@ static NSInteger const kContainerViewTag = -1000001;
 }
 
 - (UIView *)_MB_PullDownControllerHitTest:(CGPoint)point withEvent:(UIEvent *)event {
+	// Don't capture touches above the scrollView content aria (touch trhough to the view below),
+	// if the scroll view is part of a pull down controller
 	if (point.y <= 0.f && self.superview.tag == kContainerViewTag) {
 		return nil;
 	}
