@@ -369,16 +369,23 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	if ([keyPath isEqualToString:@"contentOffset"]) {
+		UIScrollView *scrollView = object;
 		if (!self.adjustedScroll) {
 			CGPoint oldValue = [[change valueForKey:NSKeyValueChangeOldKey] CGPointValue];
 			CGPoint newValue = [[change valueForKey:NSKeyValueChangeNewKey] CGPointValue];
 			CGPoint adjusted = newValue;
+			// Hide the scroll indicator while dragging
+			if (!scrollView.decelerating && (self.open || newValue.y < -self.closedTopOffset)) {
+				scrollView.showsVerticalScrollIndicator = NO;
+			} else {
+				scrollView.showsVerticalScrollIndicator = YES;
+			}
 			// Simulate the scroll view elasticity effect while dragging in the open state
 			if (self.open && [self scrollView].dragging) {
 				CGFloat delta = roundf((oldValue.y - newValue.y) / 3);
 				adjusted = CGPointMake(newValue.x, oldValue.y - delta);
 				self.adjustedScroll = YES; // prevent infinite recursion
-				[self scrollView].contentOffset = adjusted;
+				scrollView.contentOffset = adjusted;
 			}
 			[self updateBackgroundViewForScrollOfset:adjusted];
 		} else {
