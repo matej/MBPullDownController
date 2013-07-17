@@ -493,9 +493,9 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 @implementation MBPullDownControllerContainerView
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-	UIScrollView *frontView = (UIScrollView *)self.pullDownController.frontController.view;
-	if (frontView) {
-		CGPoint pointInScrollVeiw = [frontView convertPoint:point fromView:self];
+	UIScrollView *scrollView = [self.pullDownController scrollView];
+	if (scrollView) {
+		CGPoint pointInScrollVeiw = [scrollView convertPoint:point fromView:self];
 		if (pointInScrollVeiw.y <= 0.f) {
 			return [self.pullDownController.backController.view hitTest:point withEvent:event];
 		}
