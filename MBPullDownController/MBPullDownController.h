@@ -165,8 +165,3 @@
 @property (nonatomic, assign) BOOL dropShadowVisible;
 
 @end
-
-
-@interface MBPullDownControllerTapUpRecognizer : UITapGestureRecognizer
-
-@end

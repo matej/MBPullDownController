@@ -21,20 +21,23 @@ static CGFloat const kDefaultCloseDragOffset = NAN;
 static CGFloat const kDefaultOpenDragOffsetPercentage = .2;
 static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 
-static NSInteger const kContainerViewTag = -1000001;
+
+@interface MBPullDownControllerTapUpRecognizer : UITapGestureRecognizer
+
+@end
+
+
+@interface MBPullDownControllerContainerView : UIView
+
+@property (nonatomic, weak) MBPullDownController *pullDownController;
+
+@end
 
 
 @interface MBPullDownController ()
 
 @property (nonatomic, strong) MBPullDownControllerTapUpRecognizer *tapUpRecognizer;
 @property (nonatomic, assign) BOOL adjustedScroll;
-
-@end
-
-
-@interface UIScrollView (MBPullDownControllerHitTest)
-
-+ (void)_MB_SwizzleHitTestForUIScrollView;
 
 @end
 
@@ -74,19 +77,24 @@ static NSInteger const kContainerViewTag = -1000001;
 	_openDragOffsetPercentage = kDefaultOpenDragOffsetPercentage;
 	_closeDragOffsetPercentage = kDefaultCloseDragOffsetPercentage;
 	_backgroundView = [MBPullDownControllerBackgroundView new];
-	[[self class] updateInstanceCount:1];
+}
+
+- (void)loadView {
+	CGRect frame = [UIScreen mainScreen].bounds;
+	MBPullDownControllerContainerView *view = [[MBPullDownControllerContainerView alloc] initWithFrame:frame];
+	view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	view.pullDownController = self;
+	self.view = view;
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.view.tag = kContainerViewTag;
 	[self changeBackControllerFrom:nil to:self.backController];
 	[self changeFrontControllerFrom:nil to:self.frontController];
 }
 
 - (void)dealloc {
 	[self cleanUpScrollView:[self scrollView]];
-	[[self class] updateInstanceCount:-1];
 }
 
 #pragma mark - Layout
@@ -331,14 +339,6 @@ static NSInteger const kContainerViewTag = -1000001;
 	}
 }
 
-+ (void)updateInstanceCount:(NSInteger)update {
-	static NSInteger count = 0;
-	if ((count == 0 && update == 1) || (count == 1 && update == -1)) {
-		[UIScrollView _MB_SwizzleHitTestForUIScrollView];
-	}
-	count = MAX(0, count + update);
-}
-
 #pragma mark - Gestures
 
 - (void)addGestureRecognizersToScrollView:(UIScrollView *)scrollView {
@@ -453,38 +453,6 @@ static NSInteger const kContainerViewTag = -1000001;
 @end
 
 
-@implementation UIScrollView (MBPullDownControllerHitTest)
-
-+ (void)_MB_SwizzleHitTestForUIScrollView {
-	// Based on http://www.mikeash.com/pyblog/friday-qa-2010-01-29-method-replacement-for-fun-and-profit.html
-	Class class = [UIScrollView class];
-    SEL originalSelector = @selector(hitTest:withEvent:);
-    SEL overrideSelector = @selector(_MB_PullDownControllerHitTest:withEvent:);
-    Method originalMethod = class_getInstanceMethod(class, originalSelector);
-    Method overrideMethod = class_getInstanceMethod(class, overrideSelector);
-	IMP overrideImp = method_getImplementation(overrideMethod);
-	const char *overrideType = method_getTypeEncoding(overrideMethod);
-	IMP originalImp = method_getImplementation(originalMethod);
-	const char *originalType = method_getTypeEncoding(originalMethod);
-    if (class_addMethod(class, originalSelector, overrideImp, overrideType)) {
-		class_replaceMethod(class, overrideSelector, originalImp, originalType);
-    } else {
-		method_exchangeImplementations(originalMethod, overrideMethod);
-    }
-}
-
-- (UIView *)_MB_PullDownControllerHitTest:(CGPoint)point withEvent:(UIEvent *)event {
-	// Don't capture touches above the scrollView content aria (touch trhough to the view below),
-	// if the scroll view is part of a pull down controller
-	if (point.y <= 0.f && self.superview.tag == kContainerViewTag) {
-		return nil;
-	}
-	return [self _MB_PullDownControllerHitTest:point withEvent:event];
-}
-
-@end
-
-
 @implementation MBPullDownControllerBackgroundView
 
 #pragma mark - Lifecycle
@@ -517,6 +485,22 @@ static NSInteger const kContainerViewTag = -1000001;
 - (void)layoutSubviews {
 	[super layoutSubviews];
 	self.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.bounds].CGPath;
+}
+
+@end
+
+
+@implementation MBPullDownControllerContainerView
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+	UIScrollView *frontView = (UIScrollView *)self.pullDownController.frontController.view;
+	if (frontView) {
+		CGPoint pointInScrollVeiw = [frontView convertPoint:point fromView:self];
+		if (pointInScrollVeiw.y <= 0.f) {
+			return [self.pullDownController.backController.view hitTest:point withEvent:event];
+		}
+	}
+	return [super hitTest:point withEvent:event];
 }
 
 @end
