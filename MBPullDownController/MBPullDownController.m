@@ -99,9 +99,8 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 
 #pragma mark - Layout
 
-- (void)viewDidLayoutSubviews {
-	[super viewDidLayoutSubviews];
-	[self setOpen:self.open animated:YES];
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+	[self setOpen:self.open animated:NO];
 }
 
 #pragma mark - Controllers
