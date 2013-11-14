@@ -9,9 +9,7 @@
 #import "MBPullDownController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIGestureRecognizerSubclass.h>
-#import <objc/runtime.h>
-#import <objc/message.h>
-#include <math.h>
+#import <tgmath.h>
 
 
 static CGFloat const kDefaultClosedTopOffset = 44.f;
@@ -381,7 +379,7 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 			}
 			// Simulate the scroll view elasticity effect while dragging in the open state
 			if (self.open && [self scrollView].dragging) {
-				CGFloat delta = roundf((oldValue.y - newValue.y) / 3);
+				CGFloat delta = round((oldValue.y - newValue.y) / 3);
 				adjusted = CGPointMake(newValue.x, oldValue.y - delta);
 				self.adjustedScroll = YES; // prevent infinite recursion
 				scrollView.contentOffset = adjusted;
