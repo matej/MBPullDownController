@@ -242,8 +242,8 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 		[self addChildViewController:new];
 		UIView *containerView = self.view;
 		UIView *newView = new.view;
-		NSString *message = @"The front controller's view is not a UIScrollView subclass.";
-		NSAssert(!newView || [newView isKindOfClass:[UIScrollView class]], message);
+		NSAssert(!newView || [newView isKindOfClass:[UIScrollView class]],
+				 @"The front controller's view is not a UIScrollView subclass.");
 		if (newView) {
 			newView.frame = containerView.bounds;
 			[containerView addSubview:newView];
