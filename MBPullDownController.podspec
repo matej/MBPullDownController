@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MBPullDownController"
-  s.version      = "1.0"
+  s.version      = "1.1"
   s.summary      = "An iOS container view controller for pullable scroll view interfaces."
   s.description  = <<-DESC
                     MBPullDownController accepts two view controllers, which it presents one above the other. 
