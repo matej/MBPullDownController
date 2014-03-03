@@ -15,6 +15,13 @@ static NSString * const kMBImageCellId = @"MBImageCell";
 static NSString * const kURLFormat = @"http://lorempixel.com/166/166/%@/%d/";
 
 
+@interface MBImagesViewController ()
+
+@property (nonatomic, assign) BOOL statusBarHidden;
+
+@end
+
+
 @implementation MBImagesViewController
 
 #pragma mark - Lifecycle
@@ -67,6 +74,35 @@ static NSString * const kURLFormat = @"http://lorempixel.com/166/166/%@/%d/";
 	MBImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMBImageCellId forIndexPath:indexPath];
 	cell.URL = [NSURL URLWithString:[NSString stringWithFormat:kURLFormat, self.imageCategory, (indexPath.row % 10) + 1]];
 	return cell;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	// Hide the status bar when the images controller appears beneeth it
+	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+		if (scrollView.contentOffset.y > 0.f) {
+			if (!self.statusBarHidden) {
+				self.statusBarHidden = YES;
+				[self setNeedsStatusBarAppearanceUpdate];
+			}
+		} else {
+			if (self.statusBarHidden) {
+				self.statusBarHidden = NO;
+				[self setNeedsStatusBarAppearanceUpdate];
+			}
+		}
+	}
+}
+
+#pragma mark - Status bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+	return UIStatusBarStyleLightContent;
+}
+
+- (BOOL)prefersStatusBarHidden {
+	return self.statusBarHidden;
 }
 
 @end
