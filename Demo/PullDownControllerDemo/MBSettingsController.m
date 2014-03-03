@@ -12,6 +12,13 @@
 #import "MBInfoViewController.h"
 
 
+@interface MBSettingsController ()
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonHeight;
+
+@end
+
+
 @implementation MBSettingsController
 
 #pragma mark - Lifecycle
@@ -51,6 +58,15 @@
 	self.infoButton.titleLabel.font = awesome;
 	[self.infoButton setTitle:@"\uf05a" forState:UIControlStateNormal];
 	[self.toggleButton setTitle:@"\uf0ab" forState:UIControlStateNormal];
+	// Adjust top spacing for iOS 7 status bar
+	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+		CGFloat topOffset = 20.f;
+		UIEdgeInsets insets = UIEdgeInsetsMake(topOffset, 0.f, 0.f, 0.f);
+		self.toggleButton.contentEdgeInsets = insets;
+		self.infoButton.contentEdgeInsets = insets;
+		self.reloadButton.contentEdgeInsets = insets;
+		self.buttonHeight.constant += topOffset;
+	}
 }
 
 #pragma mark - Actions

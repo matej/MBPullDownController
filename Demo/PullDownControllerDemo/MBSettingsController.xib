@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MBSettingsController">
             <connections>
+                <outlet property="buttonHeight" destination="5Rg-rk-NOL" id="v61-xG-pY7"/>
                 <outlet property="infoButton" destination="9" id="100"/>
                 <outlet property="reloadButton" destination="16" id="99"/>
                 <outlet property="tableView" destination="76" id="89"/>
@@ -20,12 +21,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4">
-                    <rect key="frame" x="0.0" y="0.0" width="81" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="106" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.555535" green="0.81593000000000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="24"/>
-                        <constraint firstAttribute="width" constant="81" id="116"/>
+                        <constraint firstAttribute="height" constant="44" id="5Rg-rk-NOL"/>
+                        <constraint firstAttribute="width" constant="106" id="dJT-eA-gMu"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                     <state key="normal" title="Open">
@@ -40,13 +41,9 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9">
-                    <rect key="frame" x="239" y="0.0" width="81" height="44"/>
+                    <rect key="frame" x="214" y="0.0" width="106" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.555535" green="0.81593000000000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="81" id="120"/>
-                        <constraint firstAttribute="height" constant="44" id="125"/>
-                    </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                     <state key="normal" title="Info">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -60,12 +57,9 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="16">
-                    <rect key="frame" x="82" y="0.0" width="156" height="44"/>
+                    <rect key="frame" x="107" y="0.0" width="106" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.555535" green="0.81593000000000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="126"/>
-                    </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
                     <state key="normal" title="Reload">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -98,10 +92,12 @@
                 <constraint firstItem="76" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="77"/>
                 <constraint firstItem="76" firstAttribute="trailing" secondItem="1" secondAttribute="trailing" id="82"/>
                 <constraint firstItem="76" firstAttribute="bottom" secondItem="1" secondAttribute="bottom" id="84"/>
-                <constraint firstItem="16" firstAttribute="centerX" secondItem="76" secondAttribute="centerX" id="86"/>
-                <constraint firstItem="76" firstAttribute="top" secondItem="1" secondAttribute="top" constant="45" id="88"/>
                 <constraint firstItem="16" firstAttribute="leading" secondItem="4" secondAttribute="trailing" constant="1" id="138"/>
                 <constraint firstItem="9" firstAttribute="leading" secondItem="16" secondAttribute="trailing" constant="1" id="139"/>
+                <constraint firstItem="4" firstAttribute="width" secondItem="9" secondAttribute="width" id="DN2-bY-BQh"/>
+                <constraint firstItem="4" firstAttribute="height" secondItem="16" secondAttribute="height" id="Poe-pU-cO0"/>
+                <constraint firstItem="76" firstAttribute="top" secondItem="4" secondAttribute="bottom" constant="1" id="Rwl-S7-rUC"/>
+                <constraint firstItem="4" firstAttribute="height" secondItem="9" secondAttribute="height" id="xRC-vP-DhJ"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
