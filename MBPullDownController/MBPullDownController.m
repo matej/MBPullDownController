@@ -101,6 +101,16 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 	[self setOpen:self.open animated:NO];
 }
 
+#pragma mark - Status bar
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+	return self.frontController;
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+	return self.frontController;
+}
+
 #pragma mark - Controllers
 
 - (void)setFrontController:(UIViewController *)frontController {
