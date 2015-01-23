@@ -474,7 +474,6 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 - (id)init {
 	self = [super init];
 	if (self) {
-		self.backgroundColor = [UIColor whiteColor];
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		self.dropShadowVisible = YES;
 	}
