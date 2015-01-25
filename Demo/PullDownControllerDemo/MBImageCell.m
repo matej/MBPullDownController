@@ -100,10 +100,10 @@ static NSString * const kImageFadeAnimationKey = @"imageFade";
 
 - (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSHTTPURLResponse *)response {
     self.responseData = [[NSMutableData alloc]init];
-	int code = [response statusCode];
+	NSInteger code = [response statusCode];
 	if (code != 200) {
 		[connection cancel];
-		NSDictionary *info = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Invalid response code (%d).", code]};
+		NSDictionary *info = @{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Invalid response code (%ld).", (long)code]};
 		NSError *error = [NSError errorWithDomain:@"MBImageCell" code:code userInfo:info];
 		[self connection:connection didFailWithError:error];
 	}
