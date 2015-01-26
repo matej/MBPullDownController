@@ -327,7 +327,7 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 	if (scrollView) {
 		[self unregisterFromScrollViewKVO:scrollView];
 		[self.backgroundView removeFromSuperview];
-		[self removeGesureRecognizersFromScrollView:scrollView];
+		[self removeGestureRecognizersFromScrollView:scrollView];
 	}
 }
 
@@ -355,7 +355,7 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 	self.tapUpRecognizer = tapUp;
 }
 
-- (void)removeGesureRecognizersFromScrollView:(UIScrollView *)scrollView {
+- (void)removeGestureRecognizersFromScrollView:(UIScrollView *)scrollView {
 	[scrollView removeGestureRecognizer:self.tapUpRecognizer];
 }
 
@@ -508,9 +508,11 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 	UIScrollView *scrollView = [self.pullDownController scrollView];
 	if (scrollView) {
-		CGPoint pointInScrollVeiw = [scrollView convertPoint:point fromView:self];
-		if (pointInScrollVeiw.y <= 0.f) {
-			return [self.pullDownController.backController.view hitTest:point withEvent:event];
+		CGPoint pointInScrollView = [scrollView convertPoint:point fromView:self];
+		if (pointInScrollView.y <= 0.f) {
+			UIView *targetView = self.pullDownController.backController.view;
+			return [targetView hitTest:[self convertPoint:point toView:targetView]
+							 withEvent:event];
 		}
 	}
 	return [super hitTest:point withEvent:event];
