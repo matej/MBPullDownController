@@ -19,7 +19,7 @@ You will need LLVM 3.0 or later in order to build MBPullDownController.
 
 ## Adding MBPullDownController to your project
 
-### Cocoapods
+### CocoaPods
 
 [CocoaPods](http://cocoapods.org) is the recommended way to add MBPullDownController to your project.
 
