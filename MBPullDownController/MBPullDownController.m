@@ -210,6 +210,7 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 	}
 	
 	CGFloat offset = open ? self.view.bounds.size.height - self.openBottomOffset : self.closedTopOffset;
+    if (@available(iOS 11, *)) { offset += open ? -self.view.safeAreaInsets.bottom : self.view.safeAreaInsets.top; }
 	CGPoint sOffset = scrollView.contentOffset;
 	// Set content inset (no animation)
 	UIEdgeInsets contentInset = scrollView.contentInset;
