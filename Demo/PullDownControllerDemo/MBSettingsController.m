@@ -36,8 +36,20 @@
 	[self updateInsets];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self updateButtonSizing];
+}
+
 - (void)dealloc {
 	[self unregisterFromKVO];
+}
+
+#pragma mark - Layoyt
+
+- (void)viewSafeAreaInsetsDidChange {
+    [super viewSafeAreaInsetsDidChange];
+    [self updateButtonSizing];
 }
 
 #pragma mark - DisplayList
@@ -58,15 +70,18 @@
 	self.infoButton.titleLabel.font = awesome;
 	[self.infoButton setTitle:@"\uf05a" forState:UIControlStateNormal];
 	[self.toggleButton setTitle:@"\uf0ab" forState:UIControlStateNormal];
-	// Adjust top spacing for iOS 7 status bar
-	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-		CGFloat topOffset = 20.f;
-		UIEdgeInsets insets = UIEdgeInsetsMake(topOffset, 0.f, 0.f, 0.f);
-		self.toggleButton.contentEdgeInsets = insets;
-		self.infoButton.contentEdgeInsets = insets;
-		self.reloadButton.contentEdgeInsets = insets;
-		self.buttonHeight.constant += topOffset;
-	}
+}
+
+- (void)updateButtonSizing {
+    CGFloat topOffset = 20.f;
+    if (@available(iOS 11, *)) {
+        topOffset = self.view.safeAreaInsets.top;
+    }
+    UIEdgeInsets insets = UIEdgeInsetsMake(topOffset, 0.f, 0.f, 0.f);
+    self.toggleButton.contentEdgeInsets = insets;
+    self.infoButton.contentEdgeInsets = insets;
+    self.reloadButton.contentEdgeInsets = insets;
+    self.buttonHeight.constant = 44 + topOffset;
 }
 
 #pragma mark - Actions
