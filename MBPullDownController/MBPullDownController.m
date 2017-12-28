@@ -36,6 +36,7 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 
 @property (nonatomic, strong) MBPullDownControllerTapUpRecognizer *tapUpRecognizer;
 @property (nonatomic, assign) BOOL adjustedScroll;
+@property (nonatomic, assign) BOOL firstLayoutCalled;
 
 @end
 
@@ -97,8 +98,21 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 
 #pragma mark - Layout
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    if (!self.firstLayoutCalled) {
+        [self setOpen:self.open animated:NO];
+        self.firstLayoutCalled = YES;
+    }
+}
+
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	[self setOpen:self.open animated:NO];
+}
+
+- (void)viewSafeAreaInsetsDidChange {
+    [super viewSafeAreaInsetsDidChange];
+    [self setOpen:self.open animated:NO];
 }
 
 #pragma mark - Status bar
@@ -142,7 +156,7 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 - (void)setClosedTopOffset:(CGFloat)closedTopOffset animated:(BOOL)animated {
 	if (_closedTopOffset != closedTopOffset) {
 		_closedTopOffset = closedTopOffset;
-		if (!self.open) {
+		if (!self.open && self.isViewLoaded) {
 			[self setOpen:NO animated:animated];
 		}
 	}
@@ -155,7 +169,7 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 - (void)setOpenBottomOffset:(CGFloat)openBottomOffset animated:(BOOL)animated {
 	if (_openBottomOffset != openBottomOffset) {
 		_openBottomOffset = openBottomOffset;
-		if (self.open) {
+		if (self.open && self.isViewLoaded) {
 			[self setOpen:YES animated:animated];
 		}
 	}
@@ -215,6 +229,7 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 	// Set content inset (no animation)
 	UIEdgeInsets contentInset = scrollView.contentInset;
 	contentInset.top = offset;
+    if (@available(iOS 11, *)) { contentInset.bottom = self.view.safeAreaInsets.bottom; }
 	scrollView.contentInset = contentInset;
 	// Restor the previous scroll offset, sicne the contentInset change coud had changed it
 	[scrollView setContentOffset:sOffset];
@@ -223,6 +238,7 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 	void (^updateScrollInsets)(void) = ^{
 		UIEdgeInsets scrollIndicatorInsets = scrollView.scrollIndicatorInsets;
 		scrollIndicatorInsets.top = offset;
+        if (@available(iOS 11, *)) { scrollIndicatorInsets.bottom = self.view.safeAreaInsets.bottom; }
 		scrollView.scrollIndicatorInsets = scrollIndicatorInsets;
 	};
 	if (animated) {
@@ -321,6 +337,9 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 		[self registerForScrollViewKVO:scrollView];
 		[self addGestureRecognizersToScrollView:scrollView];
 		[self initializeBackgroundView];
+        if (@available(iOS 11, *)) {
+            scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
 	}
 }
 
@@ -329,6 +348,9 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 		[self unregisterFromScrollViewKVO:scrollView];
 		[self.backgroundView removeFromSuperview];
 		[self removeGesureRecognizersFromScrollView:scrollView];
+        if (@available(iOS 11, *)) {
+            scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
+        }
 	}
 }
 
