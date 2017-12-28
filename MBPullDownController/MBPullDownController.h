@@ -109,10 +109,9 @@
 /**
  * The dedicated initializer. 
  * @param frontController A UIViewController to be set as the frontController property. 
- * The controller's view needs to be n UIScrollView subclass.
- * @param frontController A UIViewController to be set as the backController property. 
+ * The controller's view needs to be a UIScrollView subclass.
  */
-- (id)initWithFrontController:(UIViewController *)front backController:(UIViewController *)back;
+- (id)initWithFrontController:(UIViewController *)frontController backController:(UIViewController *)back;
 
 /**
  * Switches from the open to the closed state or vice versa.  

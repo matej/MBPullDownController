@@ -49,10 +49,10 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 	return [self initWithFrontController:nil backController:nil];
 }
 
-- (id)initWithFrontController:(UIViewController *)front backController:(UIViewController *)back {
+- (id)initWithFrontController:(UIViewController *)frontController backController:(UIViewController *)back {
 	self = [super init];
 	if (self) {
-		_frontController = front;
+		_frontController = frontController;
 		_backController = back;
 		[self sharedInitialization];
 	}
