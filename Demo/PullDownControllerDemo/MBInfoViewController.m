@@ -8,6 +8,13 @@
 
 #import "MBInfoViewController.h"
 
+@interface MBInfoViewController()
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topBarHeight;
+@property (nonatomic, assign) BOOL firstLayoutCalled;
+
+@end
+
 
 @implementation MBInfoViewController
 
@@ -19,10 +26,38 @@
 	[self.backButton setTitle:@"\uf0a8" forState:UIControlStateNormal];
 }
 
+#pragma mark - Layout
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    if (!self.firstLayoutCalled) {
+        [self updateTopBarLayout];
+        self.firstLayoutCalled = YES;
+    }
+}
+
+- (void)updateTopBarLayout {
+    self.topBarHeight.constant = 44.f;
+    if (@available(iOS 11, *)) {
+        self.topBarHeight.constant += self.view.safeAreaInsets.top;
+    }
+}
+
+- (void)viewSafeAreaInsetsDidChange {
+    [super viewSafeAreaInsetsDidChange];
+    [self updateTopBarLayout];
+}
+
 #pragma mark - Actions
 
 - (IBAction)backPressed:(id)sender {
 	[self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Status bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 @end
