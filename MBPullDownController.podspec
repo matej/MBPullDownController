@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MBPullDownController"
-  s.version      = "1.1.1"
+  s.version      = "1.2.0"
   s.summary      = "An iOS container view controller for pullable scroll view interfaces."
   s.description  = <<-DESC
                     MBPullDownController accepts two view controllers, which it presents one above the other. 
@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
   s.framework    = "QuartzCore"
   s.platform     = :ios
   s.requires_arc = true
-  s.ios.deployment_target = '5.0'
+  s.ios.deployment_target = '8.0'
 end
