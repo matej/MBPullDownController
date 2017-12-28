@@ -12,7 +12,7 @@
 
 static NSUInteger const kNumbeOfItems = 42;
 static NSString * const kMBImageCellId = @"MBImageCell";
-static NSString * const kURLFormat = @"http://lorempixel.com/166/166/%@/%ldd/";
+static NSString * const kURLFormat = @"https://lorempixel.com/166/166/%@/%ldd/";
 
 
 @interface MBImagesViewController ()
