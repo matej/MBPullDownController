@@ -32,7 +32,7 @@
 	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:pullDownController];
 	navigationController.navigationBarHidden = YES;
 	// Adjust top spacing for iOS 7 status bar
-    if (!@available(iOS 11, *)) {
+    if (@available(iOS 11, *)) { } else {
         pullDownController.closedTopOffset += 20.f;
     }
 	return navigationController;
