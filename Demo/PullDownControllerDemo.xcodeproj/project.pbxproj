@@ -26,6 +26,7 @@
 		D2898CEF16D7721B00FD4FF1 /* MBInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2898CED16D7721B00FD4FF1 /* MBInfoViewController.m */; };
 		D2898CF016D7721B00FD4FF1 /* MBInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2898CEE16D7721B00FD4FF1 /* MBInfoViewController.xib */; };
 		D2898CF716D79E3600FD4FF1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2898CF616D79E3600FD4FF1 /* QuartzCore.framework */; };
+		D2F3F8681FF52D1200C98A82 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2F3F8671FF52D1200C98A82 /* Launch.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		D2898CED16D7721B00FD4FF1 /* MBInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBInfoViewController.m; sourceTree = "<group>"; };
 		D2898CEE16D7721B00FD4FF1 /* MBInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MBInfoViewController.xib; sourceTree = "<group>"; };
 		D2898CF616D79E3600FD4FF1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D2F3F8671FF52D1200C98A82 /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				D2898CC016D7686000FD4FF1 /* Default.png */,
 				D2898CC216D7686000FD4FF1 /* Default@2x.png */,
 				D2898CC416D7686000FD4FF1 /* Default-568h@2x.png */,
+				D2F3F8671FF52D1200C98A82 /* Launch.storyboard */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			files = (
 				D2898CB916D7686000FD4FF1 /* InfoPlist.strings in Resources */,
 				D2898CC116D7686000FD4FF1 /* Default.png in Resources */,
+				D2F3F8681FF52D1200C98A82 /* Launch.storyboard in Resources */,
 				D2898CC316D7686000FD4FF1 /* Default@2x.png in Resources */,
 				D2898CC516D7686000FD4FF1 /* Default-568h@2x.png in Resources */,
 				D2898CEB16D7720F00FD4FF1 /* MBSettingsController.xib in Resources */,
@@ -300,7 +304,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -324,7 +328,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
