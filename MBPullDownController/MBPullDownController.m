@@ -12,6 +12,10 @@
 #import <tgmath.h>
 
 
+NSNotificationName MBPullDownControllerWillToggleNotification = @"MBPullDownControllerWillToggleNotification";
+NSString * const MBPullDownControllerNewStateKey = @"MBPullDownControllerNewStateKey";
+
+
 static CGFloat const kDefaultClosedTopOffset = 44.f;
 static CGFloat const kDefaultOpenBottomOffset = 44.f;
 static CGFloat const kDefaultOpenDragOffset = NAN;
@@ -226,6 +230,7 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 - (void)setOpen:(BOOL)open animated:(BOOL)animated {
     if (open != _open) {
         [self willChangeValueForKey:@"open"];
+        [NSNotificationCenter.defaultCenter postNotificationName:MBPullDownControllerWillToggleNotification object:self userInfo:@{MBPullDownControllerNewStateKey: @(open)}];
         _open = open;
         [self didChangeValueForKey:@"open"];
     }

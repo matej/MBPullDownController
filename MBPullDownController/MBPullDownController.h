@@ -29,6 +29,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+/**
+ * A notification sent when the open / close state changes.
+ */
+extern NSNotificationName MBPullDownControllerWillToggleNotification;
+
+/**
+ * Notification user info key containing a BOOL NSNumber specifying the open state.
+ */
+extern NSString * const MBPullDownControllerNewStateKey;
+
 
 @interface MBPullDownController : UIViewController
 
