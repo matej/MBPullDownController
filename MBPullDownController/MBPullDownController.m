@@ -364,7 +364,7 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 		if (enabled && offset.y > [self computedCloseDragOffset] - self.view.bounds.size.height + self.openBottomOffset) {
 			[self setOpen:NO animated:YES];
 		} else {
-			[self setOpen:YES animated:YES];
+            [self setOpen:(abs(offset.y) == (int)[self scrollView].bounds.size.height - self.openBottomOffset) ? NO : YES animated:YES];
 		}
 	}
 }
