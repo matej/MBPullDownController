@@ -448,43 +448,65 @@ static CGFloat const kDefaultCloseDragOffsetPercentage = .05;
 #pragma mark - Lifecycle
 
 - (id)initWithTarget:(id)target action:(SEL)action {
-	self = [super initWithTarget:target action:action];
-	if (self) {
-		self.cancelsTouchesInView = NO;
-		self.delaysTouchesBegan = NO;
-		self.delaysTouchesEnded = NO;
-	}
-	return self;
+    self = [super initWithTarget:target action:action];
+    if (self) {
+        self.cancelsTouchesInView = NO;
+        self.delaysTouchesBegan = NO;
+        self.delaysTouchesEnded = NO;
+    }
+    return self;
 }
 
 #pragma mark - Touch handling
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	
+    UITouch *touch = touches.anyObject;
+    UIView *touchView = touch.view;
+    if ([self anySuperviewOf:touchView isKindOfClass:[UITableViewCell class]] ||
+        [self anySuperviewOf:touchView isKindOfClass:[UIControl class]]) {
+        [self ignoreTouch:touch forEvent:event];
+    }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-	
+
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	self.state = UIGestureRecognizerStateRecognized;
-	self.state = UIGestureRecognizerStateEnded;
+    self.state = UIGestureRecognizerStateRecognized;
+    self.state = UIGestureRecognizerStateEnded;
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-	self.state = UIGestureRecognizerStateRecognized;
-	self.state = UIGestureRecognizerStateEnded;
+    self.state = UIGestureRecognizerStateRecognized;
+    self.state = UIGestureRecognizerStateEnded;
 }
 
 #pragma mark - Tap prevention
 
 - (BOOL)canPreventGestureRecognizer:(UIGestureRecognizer *)preventedGestureRecognizer {
-	return NO;
+    return NO;
 }
 
 - (BOOL)canBePreventedByGestureRecognizer:(UIGestureRecognizer *)preventingGestureRecognizer {
-	return NO;
+    return YES;
+}
+
+- (BOOL)shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
+
+#pragma mark - Helper
+
+- (BOOL)anySuperviewOf:(UIView *)view isKindOfClass:(Class)class {
+    if ([view isKindOfClass:class]) {
+        return YES;
+    }
+    UIView *superView = view.superview;
+    if (!superView) {
+        return NO;
+    }
+    return [self anySuperviewOf:superView isKindOfClass:class];
 }
 
 @end
